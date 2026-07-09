@@ -4,14 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connectats — Digitalment Segurs</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Skia';
+    src: url('Skia.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+</style>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
-    font-family: "Quicksand", sans-serif;
+    font-family: "Skia", "Gill Sans", sans-serif;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -37,7 +42,7 @@
 
   /* Text de sota el canvas (Connectats + subtítol) gestionat pel canvas */
   .contact {
-    font-family: "Quicksand", sans-serif;
+    font-family: "Skia", "Gill Sans", sans-serif;
     font-weight: 500;
     font-size: 1.1rem;
     color: #333333;
@@ -81,7 +86,7 @@ const GD=[[46.7,164.1,47.28,165.45,49.17,169.53,50.2,172.2,4.1,0.9],[50.2,172.2,
 const cvs = document.getElementById('logo-canvas');
 
 // Proporcions del logo original: ~900 wide, ~340 tall (corbes ~180px + text ~160px)
-const DESIGN_W = 900, DESIGN_H = 340;
+const DESIGN_W = 900, DESIGN_H = 428;
 function resize() {
   const w = Math.min(640, cvs.parentElement.clientWidth);
   cvs.width  = w * devicePixelRatio;
@@ -103,8 +108,8 @@ function sx(x) {
   return (x - SVG_X0) / (SVG_X1 - SVG_X0) * cvs.width * 0.92 + cvs.width * 0.04;
 }
 function sy(y) {
-  const zoneH = cvs.height * 0.50; // les corbes ocupen la meitat superior
-  return cvs.height * 0.02 + (y - SVG_Y0) / (SVG_Y1 - SVG_Y0) * zoneH;
+  const zoneH = cvs.height * 0.355; // les corbes ocupen el 35.5% superior
+  return cvs.height * 0.03 + (y - SVG_Y0) / (SVG_Y1 - SVG_Y0) * zoneH;
 }
 function sw(w) {
   return w * (cvs.width / (DESIGN_W * devicePixelRatio)) * devicePixelRatio * 1.1;
@@ -223,30 +228,44 @@ function render(ts) {
   // ─ Text "Connectats" ─
   const a1    = ease(nm(progress, T1_START, T1_END));
   const rise1 = (1 - ease(nm(progress, T1_START, T1_START + 0.20))) * cvs.height * 0.05;
-  const textY = cvs.height * 0.68;
-  const fontSize1 = cvs.width * 0.093;
+  const textY = cvs.height * 0.672;
+  const fontSize1 = cvs.width * 0.186;
 
   ctx.globalAlpha = a1;
-  ctx.font = `300 ${fontSize1}px "Quicksand", "Gill Sans", sans-serif`;
+  ctx.font = `200 ${fontSize1}px "Skia", "Gill Sans", sans-serif`;
   ctx.fillStyle = '#1a1a2e';
   ctx.textAlign = 'center';
-  ctx.fillText('Connectats', cvs.width/2, textY + rise1);
+  ctx.save();
+  ctx.translate(cvs.width/2, textY + rise1);
+  ctx.scale(0.88, 1.0);
+  ctx.fillText('Connectats', 0, 0);
+  ctx.restore();
 
   // ─ Subtítol "DIGITALMENT SEGURS" ─
   const a2    = ease(nm(progress, T2_START, T2_END));
   const rise2 = (1 - ease(nm(progress, T2_START, T2_START + 0.15))) * cvs.height * 0.03;
-  const fontSize2 = cvs.width * 0.028;
-  const letterSp  = cvs.width * 0.003;
+  const fontSize2 = cvs.width * 0.050;
+  const letterSp  = cvs.width * 0.0035;
 
   ctx.globalAlpha = a2;
-  ctx.font = `400 ${fontSize2}px "Quicksand", "Gill Sans", sans-serif`;
+  ctx.font = `200 ${fontSize2}px "Skia", "Gill Sans", sans-serif`;
   ctx.fillStyle = '#555';
 
-  // Letter-spacing natiu — deixem que el motor tipogràfic gestioni el kerning
+  // Letter-spacing natiu + escala per lletres més altes i primes
   const sub = 'DIGITALMENT SEGURS';
   ctx.letterSpacing = letterSp + 'px';
   ctx.textAlign = 'center';
-  ctx.fillText(sub, cvs.width/2, textY + rise1 + fontSize1*0.52 + rise2);
+
+  const subX = cvs.width/2;
+  const subY = textY + rise1 + fontSize2*0.910 + rise2 + 40;
+  const scaleX = 0.8;  // lleugerament condensat (mesurat de la imatge)
+  const scaleY = 1.0;   // sense estirament vertical
+
+  ctx.save();
+  ctx.translate(subX, subY);
+  ctx.scale(scaleX, scaleY);
+  ctx.fillText(sub, 0, 0);
+  ctx.restore();
   ctx.letterSpacing = '0px';
 
   ctx.globalAlpha = 1;
