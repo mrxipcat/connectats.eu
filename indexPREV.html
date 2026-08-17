@@ -142,7 +142,7 @@ function drawParticle(data, color, frac, now) {
     ctx.moveTo(sx(d[0]), sy(d[1]));
     ctx.bezierCurveTo(sx(d[2]),sy(d[3]), sx(d[4]),sy(d[5]), sx(d[6]),sy(d[7]));
     ctx.strokeStyle = color;
-    ctx.globalAlpha = fadeIn;
+    ctx.globalAlpha = d[9] * fadeIn;
     ctx.lineWidth = sw(d[8]);
     ctx.lineCap = 'round';
     ctx.stroke();
@@ -161,7 +161,7 @@ function drawParticle(data, color, frac, now) {
     ctx.moveTo(sx(d[0]), sy(d[1]));
     ctx.bezierCurveTo(sx(mx),sy(my), sx(mx2),sy(my2), sx(ex),sy(ey));
     ctx.strokeStyle = color;
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = d[9];
     ctx.lineWidth = sw(d[8]);
     ctx.lineCap = 'round';
     ctx.stroke();
