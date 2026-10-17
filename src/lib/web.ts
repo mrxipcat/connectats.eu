@@ -5,7 +5,7 @@
 export const web = {
   nom: 'Connectats',
   lema: 'Digitalment Segurs',
-  nomLlarg: 'Associació Connectats — Digitalment Segurs',
+  nomLlarg: 'Connectats Digitalment Segurs Associació',
   descripcio:
     'Formació, assessorament i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
   correu: 'info@connectats.eu',
