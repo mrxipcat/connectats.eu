@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { web } from '../../lib/web';
+---
+<Base
+  titol="No s'ha pogut enviar"
+  descripcio="El missatge no s'ha pogut enviar."
+  senseIndexar={true}
+>
+  <section class="seccio">
+    <div class="contenidor contenidor--estret">
+      <p class="sobretitol">Contacte</p>
+      <h1>No s'ha pogut enviar el missatge</h1>
+      <p class="entradeta">
+        Pot ser que faltés algun camp obligatori o que hi hagi hagut un problema tècnic.
+      </p>
+      <p>
+        Torna-ho a provar des del <a href="/contacte">formulari de contacte</a> o, si
+        ho prefereixes, escriu-nos directament a <a href={`mailto:${web.correu}`}>{web.correu}</a>.
+      </p>
+    </div>
+  </section>
+</Base>

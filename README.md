@@ -138,29 +138,29 @@ Llista del que cal resoldre:
 
 ## Connectar el formulari de contacte
 
-La web és un lloc estàtic: no té servidor propi per rebre els missatges del formulari. Cal un servei extern que els reculli i els enviï al correu de l'associació.
+La web és estàtica, però porta una petita **funció d'Azure** (carpeta `api/`) que rep el formulari a `/api/contacte` i l'envia per correu a través del servidor SMTP de **Gmail**, des del compte `connectats.eu@gmail.com`. (El correu del domini és a Zoho Mail, però el pla gratuït de Zoho no permet SMTP.) No hi ha scripts de tercers ni CAPTCHA: l'antispam el fa un **camp ocult** (*honeypot*).
 
-**Mentre no estigui configurat**, el formulari surt desactivat amb un avís i l'adreça de correu a la vista. La web funciona igualment.
+Quan algú envia el formulari, el correu arriba a la bústia configurada, amb l'adreça de la persona com a «Respon a»: per contestar n'hi ha prou de respondre el correu. La persona veu la pàgina `/contacte/enviat/` (o `/contacte/error/` si alguna cosa falla).
 
-### Quin servei triar
+**Mentre no estigui activat**, el formulari surt desactivat amb un avís i l'adreça de correu a la vista. La web funciona igualment.
 
-Prioritzeu una opció **europea** i respectuosa amb la privadesa (dades allotjades a la UE, sense rastrejadors ni CAPTCHA de tercers). Algunes opcions:
+### Com activar-lo
 
-| Opció | On són les dades | Notes |
-|---|---|---|
-| **Funció d'Azure** al mateix grup de recursos | Regió que trieu (per exemple, Europa Occidental) | La més coherent: tot queda al mateix proveïdor que ja fem servir |
-| Serveis europeus de formularis | UE | Comproveu sempre que no afegeixin galetes ni scripts |
+1. **Contrasenya d'aplicació a Google.** Entreu al compte de Google `connectats.eu@gmail.com` → *Seguretat* → activeu la **verificació en dos passos** (és obligatòria) → **Contrasenyes d'aplicació** (myaccount.google.com/apppasswords) i creeu-ne una (per exemple, «Web Azure»). Google la mostra una sola vegada: són 16 lletres.
+2. **Variables a Azure.** Portal d'Azure → la Static Web App → **Variables d'entorn** (*Environment variables*) → producció, i afegiu:
 
-> Eviteu els serveis que exigeixen incrustar un script seu o un CAPTCHA de Google: trencarien la política de seguretat de la web i la promesa de «sense rastrejadors». La protecció antispam ja la fa un **camp ocult** (*honeypot*) dins el formulari.
+   | Nom | Valor |
+   |---|---|
+   | `SMTP_USUARI` | `connectats.eu@gmail.com` |
+   | `SMTP_CONTRASENYA` | la contrasenya d'aplicació del pas 1 |
+   | `CORREU_DESTI` | *(opcional)* la bústia on han d'arribar els missatges; per exemple `formulari@connectats.eu`; si no hi és, arriben al mateix compte de Gmail |
+   | `SMTP_SERVIDOR`, `SMTP_PORT` | *(opcionals)* per defecte `smtp.gmail.com` i `465` |
 
-### Com configurar-lo
-
-1. Doneu-vos d'alta al servei triat i obteniu-ne **l'adreça de destinació del formulari** (una URL que comença per `https://`).
-2. A GitHub: repositori → **Settings** → **Secrets and variables** → **Actions** → pestanya **Variables** → **New repository variable**.
+   La contrasenya **no** va mai al repositori.
+3. **Activar el formulari.** A GitHub: repositori → **Settings** → **Secrets and variables** → **Actions** → pestanya **Variables** → **New repository variable**:
    - Nom: `PUBLIC_FORM_ENDPOINT`
-   - Valor: l'adreça del servei.
-3. Al fitxer `staticwebapp.config.json`, dins `Content-Security-Policy`, canvieu `form-action 'self'` per `form-action 'self' https://el-domini-del-servei`.
-4. Deseu. En uns minuts el formulari quedarà actiu.
+   - Valor: `/api/contacte`
+4. Torneu a desplegar (pestanya **Actions** → *Run workflow*, o qualsevol canvi a `main`). Envieu un missatge de prova i comproveu que arriba.
 
 ---
 

@@ -53,12 +53,11 @@ const publics = [
           <h2 id="titol-tallers">Tallers i xerrades</h2>
           <p>
             Sessions d'entre una i dues hores, pràctiques i participatives. No fem exposicions
-            teòriques: treballem amb exemples reals, sovint amb els missatges que els mateixos
-            assistents porten al mòbil.
+            teòriques: treballem amb exemples reals, sovint amb els casos que els mateixos
+            assistents aporten.
           </p>
           <p>
-            <strong>Modalitat:</strong> presencial o en línia.{' '}
-            <strong>Idioma:</strong> català (també en castellà si cal).
+            <strong>Modalitat:</strong> presencial.
           </p>
           <h3>Temes que treballem</h3>
           <ul class="llista-marcada">
@@ -138,18 +137,25 @@ const publics = [
           {activitats.map((a) => (
             <li class="targeta activitat">
               <div class="activitat__data">
-                <time datetime={dataISO(a.data.data)}>
-                  <span class="activitat__dia">{a.data.data.toLocaleDateString('ca-ES', { day: 'numeric', timeZone: 'Europe/Madrid' })}</span>
-                  <span class="activitat__mes">{a.data.data.toLocaleDateString('ca-ES', { month: 'short', timeZone: 'Europe/Madrid' })}</span>
-                  <span class="activitat__any">{a.data.data.getFullYear()}</span>
-                </time>
+                {a.data.data_per_confirmar ? (
+                  <time>
+                    <span class="activitat__mes">Data</span>
+                    <span class="activitat__any">per confirmar</span>
+                  </time>
+                ) : (
+                  <time datetime={dataISO(a.data.data)}>
+                    <span class="activitat__dia">{a.data.data.toLocaleDateString('ca-ES', { day: 'numeric', timeZone: 'Europe/Madrid' })}</span>
+                    <span class="activitat__mes">{a.data.data.toLocaleDateString('ca-ES', { month: 'short', timeZone: 'Europe/Madrid' })}</span>
+                    <span class="activitat__any">{a.data.data.getFullYear()}</span>
+                  </time>
+                )}
               </div>
               <div class="activitat__cos">
                 <h3>{a.data.titol}</h3>
                 <p class="meta">
-                  <span><Icona nom="calendari" mida={18} /> {formataDataHora(a.data.data)}</span>
-                  <span><Icona nom={a.data.modalitat === 'en línia' ? 'pantalla' : 'lloc'} mida={18} /> {a.data.lloc}</span>
-                  <span class="etiqueta etiqueta--noticies">{a.data.modalitat === 'en línia' ? 'En línia' : 'Presencial'}</span>
+                  <span><Icona nom="calendari" mida={18} /> {a.data.data_per_confirmar ? 'Data per confirmar' : formataDataHora(a.data.data)}</span>
+                  {a.data.lloc && <span><Icona nom={a.data.modalitat === 'en línia' ? 'pantalla' : 'lloc'} mida={18} /> {a.data.lloc}</span>}
+                  {a.data.modalitat && <span class="etiqueta etiqueta--noticies">{a.data.modalitat === 'en línia' ? 'En línia' : 'Presencial'}</span>}
                 </p>
                 {a.data.descripcio && <p>{a.data.descripcio}</p>}
                 {a.data.enllac_inscripcio && (

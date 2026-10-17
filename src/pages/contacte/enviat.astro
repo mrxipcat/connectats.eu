@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icona from '../../components/Icona.astro';
+---
+<Base
+  titol="Missatge enviat"
+  descripcio="Hem rebut el teu missatge."
+  senseIndexar={true}
+>
+  <section class="seccio">
+    <div class="contenidor contenidor--estret">
+      <p class="sobretitol">Contacte</p>
+      <h1>Gràcies, hem rebut el teu missatge</h1>
+      <p class="entradeta">
+        Et respondrà una persona de l'equip, normalment en un o dos dies feiners.
+      </p>
+      <p class="nota nota--avis">
+        <Icona nom="alerta" mida={22} />
+        <span>
+          Si et responem, ho farem sempre des d'una adreça <strong>@connectats.eu</strong>
+          i mai et demanarem contrasenyes, codis ni dades bancàries.
+        </span>
+      </p>
+      <p><a class="boto boto--secundari" href="/">Torna a l'inici</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,5 +1,6 @@
 {
   "trailingSlash": "auto",
+  "platform": { "apiRuntime": "node:22" },
   "responseOverrides": {
     "404": { "rewrite": "/404.html" }
   },

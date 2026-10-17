@@ -31,8 +31,8 @@ export const menu = [
 export const menuLegal = [
   { text: 'Avís legal', url: '/avis-legal' },
   { text: 'Privadesa i galetes', url: '/privadesa' },
-  { text: 'Accessibilitat', url: '/accessibilitat' },
-  { text: 'Transparència', url: '/transparencia' },
+  // Desactivat de moment: { text: 'Accessibilitat', url: '/accessibilitat' },
+  // Desactivat de moment: { text: 'Transparència', url: '/transparencia' },
 ] as const;
 
 export const categories = {

@@ -25,8 +25,10 @@ const agenda = defineCollection({
   schema: z.object({
     titol: z.string(),
     data: z.coerce.date(),
-    lloc: z.string(),
-    modalitat: z.enum(['presencial', 'en línia']),
+    // Si és true, la data només serveix per ordenar l'agenda i es mostra «Data per confirmar».
+    data_per_confirmar: z.boolean().default(false),
+    lloc: z.string().optional(),
+    modalitat: z.enum(['presencial', 'en línia']).optional(),
     enllac_inscripcio: z.string().url().optional(),
     descripcio: z.string().optional(),
   }),

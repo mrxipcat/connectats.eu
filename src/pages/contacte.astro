@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 import Icona from '../components/Icona.astro';
 import { motiusContacte, web } from '../lib/web';
 
-// Servei d'enviament del formulari. Es configura amb la variable d'entorn
-// PUBLIC_FORM_ENDPOINT (vegeu el fitxer .env.example i el README).
+// Adreça que rep el formulari: la funció d'Azure /api/contacte (carpeta «api»).
+// S'activa amb la variable d'entorn PUBLIC_FORM_ENDPOINT (vegeu el README).
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 const configurat = endpoint.length > 0;
 ---

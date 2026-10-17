@@ -1,0 +1,12 @@
+{
+  "name": "connectats-eu-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Funció d'Azure que rep el formulari de contacte i l'envia per correu",
+  "main": "src/functions/*.js",
+  "dependencies": {
+    "@azure/functions": "^4.7.0",
+    "nodemailer": "^7.0.0"
+  }
+}

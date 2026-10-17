@@ -46,7 +46,7 @@ const finalitats = [
   <section class="seccio seccio--compacta">
     <div class="contenidor">
       <p class="sobretitol">Qui som</p>
-      <h1>Dues persones, una idea senzilla i molta feina per fer</h1>
+      <h1>Petit grup de persones amb una idea senzilla i molta feina per fer</h1>
       <p class="entradeta">
         Connectats neix de la constatació que la majoria d'estafes digitals no es paren amb tecnologia,
         sinó amb informació a temps i amb algú a qui preguntar.
@@ -100,10 +100,6 @@ const finalitats = [
           </li>
         ))}
       </ul>
-      <p class="nota nota--principal finalitats__nota">
-        Pots consultar els estatuts complets a la pàgina de{' '}
-        <a href="/transparencia">Transparència</a>.
-      </p>
     </div>
   </section>
 
@@ -112,14 +108,14 @@ const finalitats = [
       <p class="sobretitol">L'equip</p>
       <h2 id="equip" class="titol-seccio">Qui hi ha al darrere</h2>
       <p class="entradeta">
-        Som un equip petit. Si ens escrius, et respondrà una de nosaltres dues.
+        Som un equip petit, amb moltes ganes d'ajudar.
       </p>
       <ul class="graella graella--2 sense-llista equip">
         {equip.map((p) => (
           <li class="targeta equip__fitxa">
             <img
               src={p.data.foto ?? '/imatges/equip-retrat-pendent.svg'}
-              alt={`Retrat de ${p.data.nom}`}
+              alt=""
               width="320"
               height="320"
               loading="lazy"

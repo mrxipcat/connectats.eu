@@ -12,6 +12,8 @@ export default defineConfig({
   build: { format: 'directory', inlineStylesheets: 'never' },
   integrations: [
     sitemap({
+      // Les pàgines de resposta del formulari no han de sortir als cercadors.
+      filter: (pagina) => !pagina.includes('/contacte/enviat') && !pagina.includes('/contacte/error'),
       i18n: { defaultLocale: 'ca', locales: { ca: 'ca-ES' } },
     }),
   ],
