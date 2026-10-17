@@ -1,0 +1,14 @@
+{
+  "name": "Connectats — Digitalment Segurs",
+  "short_name": "Connectats",
+  "description": "Formació, assessorament i recursos per fer front a les estafes en línia i als riscos digitals.",
+  "lang": "ca",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0A6B96",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,670 @@
+/* ==========================================================================
+   Connectats — Digitalment Segurs
+   Full d'estils global. Paleta derivada dels colors del logotip:
+   blau #5BB3F0 i verd #5BF05B, enfosquits fins a complir el contrast WCAG AA.
+   ========================================================================== */
+
+/* --- Tipografia allotjada al mateix servidor (cap petició a tercers) ------ */
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/atkinson-hyperlegible-next-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/atkinson-hyperlegible-next-latin-wght-italic.woff2') format('woff2-variations');
+}
+
+/* --- Variables ----------------------------------------------------------- */
+:root {
+  color-scheme: light dark;
+
+  /* Blau corporatiu */
+  --blau-50:  #EDF6FC;
+  --blau-100: #D6EAF8;
+  --blau-200: #A9D8F3;
+  --blau-300: #7FC4EC;
+  --blau-400: #5BB3F0; /* color del logotip */
+  --blau-500: #2E96D2;
+  --blau-600: #0E80B0;
+  --blau-700: #0A6B96;
+  --blau-800: #075478;
+  --blau-900: #063E5C;
+
+  /* Verd corporatiu */
+  --verd-50:  #EBFAEF;
+  --verd-100: #D4F5DC;
+  --verd-200: #A9ECB9;
+  --verd-300: #7DE89A;
+  --verd-400: #5BF05B; /* color del logotip */
+  --verd-500: #35C45C;
+  --verd-600: #22A349;
+  --verd-700: #1A8039;
+  --verd-800: #16682F;
+  --verd-900: #0E4D22;
+
+  /* Color d'avís: exclusiu del botó «He patit una estafa» i de les alertes */
+  --avis-50:  #FDF2EE;
+  --avis-100: #FBE2D9;
+  --avis-200: #F6C1AE;
+  --avis-300: #FFA98A;
+  --avis-600: #C8390F;
+  --avis-700: #B3310B;
+  --avis-800: #8F2709;
+
+  /* Neutres */
+  --gris-0:   #FFFFFF;
+  --gris-25:  #FAFCFD;
+  --gris-50:  #F4F8FA;
+  --gris-100: #E8EFF3;
+  --gris-200: #D5E1E8;
+  --gris-300: #B7C7D0;
+  --gris-500: #6A7D88;
+  --gris-600: #4A5C66;
+  --gris-800: #26383F;
+  --gris-900: #1A2B33;
+
+  /* Rols semàntics (mode clar) */
+  --fons: var(--gris-0);
+  --fons-suau: var(--gris-50);
+  --fons-targeta: var(--gris-0);
+  --fons-invers: var(--blau-900);
+  --text: var(--gris-900);
+  --text-suau: var(--gris-600);
+  --text-invers: #F2F8FB;
+  --vora: var(--gris-200);
+  --vora-forta: var(--gris-300);
+
+  --principal: var(--blau-700);
+  --principal-fort: var(--blau-800);
+  --principal-suau: var(--blau-50);
+  --principal-vora: var(--blau-200);
+
+  --accent: var(--verd-800);
+  --accent-fort: var(--verd-900);
+  --accent-suau: var(--verd-50);
+  --accent-vora: var(--verd-200);
+
+  --avis: var(--avis-700);
+  --avis-fort: var(--avis-800);
+  --avis-suau: var(--avis-50);
+  --avis-vora: var(--avis-200);
+
+  --focus: #0A6B96;
+
+  /* Formes i ritme */
+  --radi-s: 8px;
+  --radi-m: 14px;
+  --radi-l: 22px;
+  --radi-xl: 32px;
+  --ombra-s: 0 1px 2px rgb(9 42 58 / 6%), 0 2px 8px rgb(9 42 58 / 5%);
+  --ombra-m: 0 2px 6px rgb(9 42 58 / 7%), 0 10px 28px rgb(9 42 58 / 8%);
+  --ombra-l: 0 4px 12px rgb(9 42 58 / 8%), 0 20px 48px rgb(9 42 58 / 10%);
+
+  --ample: 1180px;
+  --ample-text: 68ch;
+  --marge-lateral: clamp(1rem, 4vw, 2.5rem);
+
+  /* Escala tipogràfica fluida. Base mínima 18 px. */
+  --t-base: clamp(1.125rem, 1.06rem + 0.3vw, 1.2rem);
+  --t-petit: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --t-mini: 0.9375rem;
+  --t-gran: clamp(1.25rem, 1.15rem + 0.5vw, 1.4rem);
+  --t-h4: clamp(1.2rem, 1.1rem + 0.5vw, 1.35rem);
+  --t-h3: clamp(1.35rem, 1.2rem + 0.75vw, 1.65rem);
+  --t-h2: clamp(1.7rem, 1.4rem + 1.4vw, 2.35rem);
+  --t-h1: clamp(2.1rem, 1.6rem + 2.4vw, 3.3rem);
+  --t-hero: clamp(2.4rem, 1.7rem + 3.2vw, 3.9rem);
+}
+
+/* --- Mode fosc ----------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fons: #0E1A20;
+    --fons-suau: #15242C;
+    --fons-targeta: #16262F;
+    --fons-invers: #091318;
+    --text: #E8EFF3;
+    --text-suau: #A7BBC5;
+    --text-invers: #F2F8FB;
+    --vora: #273A44;
+    --vora-forta: #3A505C;
+
+    --principal: var(--blau-300);
+    --principal-fort: var(--blau-200);
+    --principal-suau: #122D3B;
+    --principal-vora: #1E4B60;
+
+    --accent: var(--verd-300);
+    --accent-fort: var(--verd-200);
+    --accent-suau: #11301C;
+    --accent-vora: #1E5330;
+
+    --avis: var(--avis-300);
+    --avis-fort: #FFC4AC;
+    --avis-suau: #341409;
+    --avis-vora: #6B2A13;
+
+    --focus: var(--blau-300);
+
+    --ombra-s: 0 1px 2px rgb(0 0 0 / 30%);
+    --ombra-m: 0 2px 6px rgb(0 0 0 / 30%), 0 10px 28px rgb(0 0 0 / 28%);
+    --ombra-l: 0 4px 12px rgb(0 0 0 / 35%), 0 20px 48px rgb(0 0 0 / 32%);
+  }
+}
+
+/* --- Base ---------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--fons);
+  color: var(--text);
+  font-family: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--t-base);
+  line-height: 1.65;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.5em;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); }
+h4 { font-size: var(--t-h4); }
+
+p, ul, ol, dl, blockquote, table, figure { margin: 0 0 1.15em; }
+p { text-wrap: pretty; }
+
+a {
+  color: var(--principal);
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.22em;
+}
+a:hover { color: var(--principal-fort); }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img, svg, video { max-width: 100%; height: auto; }
+img { display: block; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--vora);
+  margin: 2.5rem 0;
+}
+
+strong, b { font-weight: 700; }
+
+code, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: var(--fons-suau);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+blockquote {
+  border-left: 4px solid var(--principal-vora);
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  color: var(--text-suau);
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  text-align: left;
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--vora);
+  vertical-align: top;
+}
+th { font-weight: 700; }
+
+/* --- Estructura ---------------------------------------------------------- */
+.contenidor {
+  width: 100%;
+  max-width: var(--ample);
+  margin-inline: auto;
+  padding-inline: var(--marge-lateral);
+}
+.contenidor--estret { max-width: 820px; }
+
+.seccio { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.seccio--compacta { padding-block: clamp(2rem, 4.5vw, 3.25rem); }
+.seccio--suau { background: var(--fons-suau); }
+
+.prosa { max-width: var(--ample-text); }
+.prosa h2 { margin-top: 2.2em; }
+.prosa h3 { margin-top: 1.8em; }
+.prosa > :first-child { margin-top: 0; }
+.prosa .sobretitol + h2,
+.prosa .sobretitol + h3 { margin-top: 0; }
+.prosa li { margin-bottom: 0.4em; }
+
+.titol-seccio { margin-bottom: 0.35em; }
+.entradeta {
+  font-size: var(--t-gran);
+  color: var(--text-suau);
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.sobretitol {
+  display: inline-block;
+  font-size: var(--t-mini);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--principal);
+  margin-bottom: 0.6rem;
+}
+
+/* --- Enllaç «Salta al contingut» ----------------------------------------- */
+.salta {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -150%);
+  z-index: 200;
+  background: var(--principal);
+  color: #fff;
+  padding: 0.85rem 1.4rem;
+  border-radius: 0 0 var(--radi-m) var(--radi-m);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.salta:focus {
+  transform: translate(-50%, 0);
+  color: #fff;
+}
+
+/* --- Botons (àrea de clic mínima 44 × 44 px) ----------------------------- */
+.boto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+}
+.boto:hover { transform: translateY(-1px); }
+.boto:active { transform: translateY(0); }
+
+.boto--principal {
+  background: var(--blau-700);
+  border-color: var(--blau-700);
+  color: #fff;
+  box-shadow: var(--ombra-s);
+}
+.boto--principal:hover {
+  background: var(--blau-800);
+  border-color: var(--blau-800);
+  color: #fff;
+}
+
+.boto--secundari {
+  background: transparent;
+  border-color: var(--principal);
+  color: var(--principal);
+}
+.boto--secundari:hover {
+  background: var(--principal-suau);
+  color: var(--principal-fort);
+  border-color: var(--principal-fort);
+}
+
+.boto--verd {
+  background: var(--verd-800);
+  border-color: var(--verd-800);
+  color: #fff;
+  box-shadow: var(--ombra-s);
+}
+.boto--verd:hover { background: var(--verd-900); border-color: var(--verd-900); color: #fff; }
+
+/* Botó d'avís: reservat exclusivament a «He patit una estafa» */
+.boto--avis {
+  background: var(--avis-700);
+  border-color: var(--avis-700);
+  color: #fff;
+  box-shadow: var(--ombra-s);
+}
+.boto--avis:hover { background: var(--avis-800); border-color: var(--avis-800); color: #fff; }
+
+.boto--gran { min-height: 56px; padding: 0.95rem 2rem; font-size: var(--t-gran); }
+.boto--ple { width: 100%; }
+
+@media (prefers-color-scheme: dark) {
+  .boto--principal { background: var(--blau-300); border-color: var(--blau-300); color: #06202C; }
+  .boto--principal:hover { background: var(--blau-200); border-color: var(--blau-200); color: #06202C; }
+  .boto--verd { background: var(--verd-300); border-color: var(--verd-300); color: #06230F; }
+  .boto--verd:hover { background: var(--verd-200); border-color: var(--verd-200); color: #06230F; }
+  .boto--avis { background: var(--avis-300); border-color: var(--avis-300); color: #3A1206; }
+  .boto--avis:hover { background: #FFC4AC; border-color: #FFC4AC; color: #3A1206; }
+}
+
+.grup-botons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+/* --- Etiquetes ----------------------------------------------------------- */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--t-mini);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+}
+.etiqueta--alertes {
+  background: var(--avis-suau);
+  color: var(--avis);
+  border-color: var(--avis-vora);
+}
+.etiqueta--blog {
+  background: var(--principal-suau);
+  color: var(--principal);
+  border-color: var(--principal-vora);
+}
+.etiqueta--noticies {
+  background: var(--accent-suau);
+  color: var(--accent);
+  border-color: var(--accent-vora);
+}
+
+/* --- Targetes ------------------------------------------------------------ */
+.graella {
+  display: grid;
+  gap: clamp(1.1rem, 2.5vw, 1.75rem);
+}
+.graella--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.graella--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+.graella--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+
+.targeta {
+  display: flex;
+  flex-direction: column;
+  background: var(--fons-targeta);
+  border: 1px solid var(--vora);
+  border-radius: var(--radi-l);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  box-shadow: var(--ombra-s);
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+.targeta > :last-child { margin-bottom: 0; }
+.targeta--enllacable:hover,
+.targeta--enllacable:focus-within {
+  box-shadow: var(--ombra-m);
+  transform: translateY(-3px);
+  border-color: var(--principal-vora);
+}
+.targeta h3 { margin-bottom: 0.4rem; }
+.targeta p { color: var(--text-suau); }
+
+/* Enllaç que cobreix tota la targeta sense perdre semàntica */
+.enllac-targeta { position: relative; }
+.enllac-targeta a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.meta {
+  font-size: var(--t-petit);
+  color: var(--text-suau);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* --- Bloc d'alerta ------------------------------------------------------- */
+.alerta {
+  position: relative;
+  background: var(--avis-suau);
+  border: 1px solid var(--avis-vora);
+  border-left: 8px solid var(--avis);
+  border-radius: var(--radi-m);
+  padding: clamp(1.25rem, 3vw, 1.9rem);
+}
+.alerta__capcalera {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.6rem;
+}
+.alerta h2, .alerta h3 { color: var(--text); }
+.alerta a:not(.boto) { color: var(--avis); }
+.alerta a:not(.boto):hover { color: var(--avis-fort); }
+
+/* --- Avisos informatius -------------------------------------------------- */
+.nota {
+  border-radius: var(--radi-m);
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--vora);
+  background: var(--fons-suau);
+}
+.nota--principal { background: var(--principal-suau); border-color: var(--principal-vora); }
+.nota--avis { background: var(--avis-suau); border-color: var(--avis-vora); }
+.nota > :last-child { margin-bottom: 0; }
+
+/* --- Passos numerats ----------------------------------------------------- */
+.passos {
+  list-style: none;
+  counter-reset: pas;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+.passos > li {
+  counter-increment: pas;
+  position: relative;
+  background: var(--fons-targeta);
+  border: 1px solid var(--vora);
+  border-radius: var(--radi-m);
+  padding: 1.25rem 1.4rem 1.25rem 4.6rem;
+  box-shadow: var(--ombra-s);
+}
+.passos > li::before {
+  content: counter(pas);
+  position: absolute;
+  left: 1.25rem;
+  top: 1.1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blau-700);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+.passos > li > :last-child { margin-bottom: 0; }
+.passos strong { display: block; font-size: var(--t-gran); margin-bottom: 0.2rem; }
+@media (prefers-color-scheme: dark) {
+  .passos > li::before { background: var(--blau-300); color: #06202C; }
+}
+
+/* --- Desplegables -------------------------------------------------------- */
+.desplegable {
+  border: 1px solid var(--vora);
+  border-radius: var(--radi-m);
+  background: var(--fons-targeta);
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+.desplegable[open] { border-color: var(--principal-vora); box-shadow: var(--ombra-s); }
+.desplegable > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 56px;
+  padding: 0.9rem 1.25rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: var(--t-gran);
+  list-style: none;
+}
+.desplegable > summary::-webkit-details-marker { display: none; }
+.desplegable > summary:hover { background: var(--fons-suau); }
+.desplegable__fletxa {
+  margin-left: auto;
+  flex: none;
+  transition: transform 0.2s ease;
+  color: var(--principal);
+}
+.desplegable[open] > summary .desplegable__fletxa { transform: rotate(180deg); }
+.desplegable__cos { padding: 0 1.25rem 1.35rem; }
+.desplegable__cos > :last-child { margin-bottom: 0; }
+
+/* --- Formularis ---------------------------------------------------------- */
+.camp { margin-bottom: 1.35rem; }
+.camp label,
+.bloc-etiqueta {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.camp .ajuda {
+  display: block;
+  font-size: var(--t-petit);
+  color: var(--text-suau);
+  font-weight: 400;
+  margin-bottom: 0.45rem;
+}
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+select,
+textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--fons);
+  border: 2px solid var(--vora-forta);
+  border-radius: var(--radi-s);
+}
+textarea { min-height: 10rem; resize: vertical; }
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible { border-color: var(--focus); }
+
+.casella {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+.casella input[type='checkbox'] {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.18rem 0 0;
+  accent-color: var(--blau-700);
+  flex: none;
+}
+.casella label { font-weight: 400; margin: 0; }
+.obligatori { color: var(--avis); font-weight: 700; }
+
+/* Camp trampa contra el correu brossa: invisible però no per a la validació */
+.parany {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Utilitats ----------------------------------------------------------- */
+.nomes-lector {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.centrat { text-align: center; }
+.sense-llista { list-style: none; padding: 0; margin: 0; }
+.ple { width: 100%; }
+
+/* --- Moviment reduït ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .boto:hover, .targeta--enllacable:hover { transform: none; }
+}
+
+/* --- Impressió ----------------------------------------------------------- */
+@media print {
+  .capcalera, .peu, .salta, .grup-botons { display: none !important; }
+  body { font-size: 11pt; background: #fff; color: #000; }
+}

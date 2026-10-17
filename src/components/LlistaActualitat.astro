@@ -1,0 +1,97 @@
+---
+import TargetaEntrada from './TargetaEntrada.astro';
+import Icona from './Icona.astro';
+import type { Entrada } from '../lib/contingut';
+import { ENTRADES_PER_PAGINA } from '../lib/web';
+
+interface Props {
+  entrades: Entrada[];
+  categoriaActiva?: 'totes' | 'alertes' | 'blog' | 'noticies';
+  pagina?: number;
+  baseUrl: string;
+}
+const { entrades, categoriaActiva = 'totes', pagina = 1, baseUrl } = Astro.props;
+
+const filtres = [
+  { clau: 'totes', text: 'Totes', url: '/actualitat' },
+  { clau: 'alertes', text: 'Alertes', url: '/actualitat/alertes' },
+  { clau: 'blog', text: 'Blog', url: '/actualitat/blog' },
+  { clau: 'noticies', text: 'Notícies', url: '/actualitat/noticies' },
+] as const;
+
+const total = entrades.length;
+const pagines = Math.max(1, Math.ceil(total / ENTRADES_PER_PAGINA));
+const actual = Math.min(Math.max(1, pagina), pagines);
+const visibles = entrades.slice((actual - 1) * ENTRADES_PER_PAGINA, actual * ENTRADES_PER_PAGINA);
+
+const urlPagina = (n: number) => (n === 1 ? baseUrl : `${baseUrl}/pagina/${n}`);
+---
+<nav class="filtres" aria-label="Filtra per categoria">
+  <ul class="sense-llista">
+    {filtres.map((f) => (
+      <li>
+        <a href={f.url} aria-current={f.clau === categoriaActiva ? 'true' : undefined}>{f.text}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+{visibles.length > 0 ? (
+  <ul class="graella graella--3 sense-llista">
+    {visibles.map((e) => (<li><TargetaEntrada entrada={e} /></li>))}
+  </ul>
+) : (
+  <p class="nota">Encara no hi ha entrades en aquesta categoria.</p>
+)}
+
+{pagines > 1 && (
+  <nav class="paginacio" aria-label="Paginació">
+    {actual > 1 && (
+      <a class="boto boto--secundari" href={urlPagina(actual - 1)} rel="prev">
+        <Icona nom="fletxa" mida={18} class="gira" /> Anterior
+      </a>
+    )}
+    <p class="paginacio__estat">Pàgina {actual} de {pagines}</p>
+    {actual < pagines && (
+      <a class="boto boto--secundari" href={urlPagina(actual + 1)} rel="next">
+        Següent <Icona nom="fletxa" mida={18} />
+      </a>
+    )}
+  </nav>
+)}
+
+<style>
+  .filtres { margin-bottom: 2rem; }
+  .filtres ul { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .filtres a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.4rem 1.25rem;
+    border: 2px solid var(--vora-forta);
+    border-radius: 999px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .filtres a:hover { background: var(--principal-suau); border-color: var(--principal-vora); color: var(--principal-fort); }
+  .filtres a[aria-current='true'] {
+    background: var(--principal);
+    border-color: var(--principal);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .filtres a[aria-current='true'] { color: #06202C; }
+  }
+
+  .paginacio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .paginacio__estat { margin: 0; color: var(--text-suau); font-weight: 600; }
+  :global(.gira) { transform: rotate(180deg); }
+</style>

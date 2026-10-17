@@ -1,0 +1,53 @@
+---
+import PaginaText from '../layouts/PaginaText.astro';
+import { web } from '../lib/web';
+---
+<PaginaText
+  titol="Privadesa i galetes"
+  descripcio="Com tractem les teves dades i per què aquest lloc web no utilitza galetes de seguiment ni rastrejadors."
+  entradeta="Expliquem què fem amb les teves dades, en llenguatge clar. Com més curta sigui aquesta pàgina, millor."
+  actualitzat="16 d'octubre de 2026"
+  pendent={true}
+>
+  <h2>En resum</h2>
+  <ul>
+    <li>Aquest lloc <strong>no utilitza galetes de seguiment</strong> ni analítica que et segueixi.</li>
+    <li>No hi ha píxels de publicitat, ni botons de xarxes socials que carreguin codi extern.</li>
+    <li>Les tipografies estan allotjades al nostre propi servidor: el teu navegador no fa cap petició a tercers.</li>
+    <li>Només recollim dades si ens escrius voluntàriament pel formulari de contacte.</li>
+  </ul>
+
+  <h2>Per què no hi ha bàner de galetes</h2>
+  <p>La normativa només obliga a demanar consentiment quan s'utilitzen galetes no essencials, com les de publicitat o analítica. Aquest lloc no en fa servir cap, i per això no cal un bàner. Ens sembla, a més, coherent amb el que expliquem a les nostres xerrades.</p>
+
+  <h2>Dades que tractem</h2>
+  <h3>Formulari de contacte</h3>
+  <ul>
+    <li><strong>Què recollim:</strong> nom, correu electrònic, telèfon (opcional), motiu i el missatge que ens escrius.</li>
+    <li><strong>Per a què:</strong> únicament per respondre't i, si escau, fer el seguiment de la consulta.</li>
+    <li><strong>Base jurídica:</strong> el teu consentiment, que dones marcant la casella del formulari.</li>
+    <li><strong>Quant de temps:</strong> el temps necessari per atendre la consulta i, com a màxim, <span class="pendent">[PENDENT: 12 mesos]</span> després de l'última comunicació.</li>
+    <li><strong>Qui ho rep:</strong> només les persones de l'associació que atenen el correu, i el proveïdor tècnic que fa possible l'enviament del formulari <span class="pendent">[PENDENT: indiqueu el servei contractat i on té els servidors]</span>.</li>
+  </ul>
+  <p><strong>No ens enviïs mai contrasenyes, codis de verificació ni dades bancàries</strong>, ni pel formulari ni per cap altre mitjà.</p>
+
+  <h3>Registres del servidor</h3>
+  <p>El servei d'allotjament pot conservar registres tècnics d'accés (adreça IP, data i tipus de navegador) per motius de seguretat i durant un període limitat. No els fem servir per elaborar perfils. <span class="pendent">[PENDENT: confirmeu el període amb el proveïdor]</span></p>
+
+  <h2>Emmagatzematge local al navegador</h2>
+  <p>Aquest lloc no guarda informació al teu navegador (ni galetes, ni <i>local storage</i>) més enllà de la memòria cau habitual de qualsevol pàgina web.</p>
+
+  <h2>Els teus drets</h2>
+  <p>Pots demanar accés a les teves dades, rectificar-les, suprimir-les, limitar-ne o oposar-te al tractament i sol·licitar-ne la portabilitat. Només cal que ens escriguis a <a href={`mailto:${web.correu}`}>{web.correu}</a>.</p>
+  <p>Si consideres que no hem respost correctament, pots presentar una reclamació davant l'<a href="https://apdcat.gencat.cat" rel="noopener noreferrer" target="_blank">Autoritat Catalana de Protecció de Dades (APDCAT)</a>.</p>
+
+  <h2>Responsable del tractament</h2>
+  <p>{web.nomLlarg}, NIF {web.nif}, <a href={`mailto:${web.correu}`}>{web.correu}</a>. <span class="pendent">[PENDENT: adreça postal]</span></p>
+
+  <h2>Canvis en aquesta política</h2>
+  <p>Si canviem alguna cosa, actualitzarem aquesta pàgina i la data de la darrera actualització.</p>
+</PaginaText>
+
+<style>
+  .pendent { color: var(--avis); font-weight: 700; }
+</style>

@@ -1,0 +1,19 @@
+---
+import Icona from './Icona.astro';
+interface Props { titol: string; icona?: string }
+const { titol, icona } = Astro.props;
+---
+<details class="desplegable">
+  <summary>
+    {icona && <Icona nom={icona} mida={24} class="desplegable__icona" />}
+    <span>{titol}</span>
+    <Icona nom="fletxa-baix" mida={24} class="desplegable__fletxa" />
+  </summary>
+  <div class="desplegable__cos">
+    <slot />
+  </div>
+</details>
+
+<style>
+  :global(.desplegable__icona) { flex: none; color: var(--avis); }
+</style>

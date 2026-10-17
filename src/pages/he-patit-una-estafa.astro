@@ -1,0 +1,361 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import Desplegable from '../components/Desplegable.astro';
+import TargetaEntrada from '../components/TargetaEntrada.astro';
+import { alertesRecents } from '../lib/contingut';
+
+const alertes = await alertesRecents(3);
+
+const estafes = [
+  {
+    titol: 'Missatges i correus falsos (SMS, WhatsApp i correu electrònic)',
+    reconeixer: [
+      'Et diuen que hi ha un problema amb el banc, un paquet o una multa.',
+      'Et demanen clicar un enllaç i escriure-hi les teves dades.',
+      "L'adreça de l'enllaç no és la del banc o l'empresa de veritat.",
+      'Et metin pressa: "avui", "últim avís", "es bloquejarà el compte".',
+    ],
+    fer: [
+      'No cliquis l\'enllaç.',
+      'No contestis el missatge.',
+      'Si tens dubtes, truca tu al banc amb el número de la targeta.',
+      'Fes una captura de pantalla i esborra el missatge.',
+    ],
+  },
+  {
+    titol: 'Trucades que es fan passar pel teu banc',
+    reconeixer: [
+      'Et truquen dient que hi ha moviments estranys al teu compte.',
+      'Et demanen un codi que acabes de rebre per SMS.',
+      'Et diuen que facis una transferència "a un compte segur".',
+      'Al telèfon hi apareix el número del banc de veritat (es pot falsificar).',
+    ],
+    fer: [
+      'Penja. No has de donar explicacions.',
+      'Cap banc demana mai codis ni contrasenyes per telèfon.',
+      'Truca tu al número que surt a la targeta o a l\'aplicació.',
+      'Si ja has donat un codi, truca al banc ara mateix.',
+    ],
+  },
+  {
+    titol: 'Botigues en línia falses',
+    reconeixer: [
+      'El preu és molt més baix que a tot arreu.',
+      'No hi ha telèfon, adreça ni NIF a la pàgina.',
+      'Només accepten transferència, Bizum o criptomonedes.',
+      'La pàgina és molt nova o té errades de traducció.',
+    ],
+    fer: [
+      'No paguis amb transferència ni Bizum a desconeguts.',
+      'Busca el nom de la botiga a internet amb la paraula "opinions".',
+      'Si ja has pagat, truca al banc i demana la reclamació del càrrec.',
+      'Guarda la comanda, els correus i les captures.',
+    ],
+  },
+  {
+    titol: 'Suplantació a WhatsApp ("Hola mama, he canviat de número")',
+    reconeixer: [
+      'Un número desconegut diu que és el teu fill o la teva filla.',
+      'Explica que ha perdut el mòbil o que l\'hi han trencat.',
+      'Et demana diners de seguida, amb urgència.',
+      'No vol parlar per telèfon ni fer una videotrucada.',
+    ],
+    fer: [
+      'Truca al número de sempre del teu fill o filla.',
+      'Demana-li alguna cosa que només ell o ella pugui saber.',
+      'No facis cap pagament fins que n\'estiguis segur.',
+      'Bloqueja i denuncia el número dins de WhatsApp.',
+    ],
+  },
+  {
+    titol: 'Falses inversions i criptomonedes',
+    reconeixer: [
+      'Et prometen guanys alts i segurs, sense risc.',
+      'Hi ha pressa: "places limitades", "només avui".',
+      'Han contactat amb tu per xarxes socials o per WhatsApp.',
+      'Al principi et deixen retirar una mica de diners per guanyar-se la confiança.',
+    ],
+    fer: [
+      'Desconfia de qualsevol inversió que et prometi guanys segurs.',
+      'Comprova si l\'empresa està registrada a la CNMV.',
+      'No instal·lis programes de control remot al teu ordinador.',
+      'Si has invertit diners, denuncia-ho com més aviat millor.',
+    ],
+  },
+  {
+    titol: 'Ciberassetjament i sextorsió',
+    reconeixer: [
+      'Algú t\'amenaça amb publicar imatges teves si no pagues.',
+      'Reps insults o amenaces repetides per missatge o xarxes socials.',
+      'Et pressionen perquè no ho expliquis a ningú.',
+    ],
+    fer: [
+      'No paguis. Pagar no atura el xantatge.',
+      'No esborris res: les converses són la prova.',
+      'Explica-ho a algú de confiança. No és culpa teva.',
+      'Denuncia-ho als Mossos d\'Esquadra i truca al 017.',
+    ],
+  },
+];
+
+const onDenunciar = [
+  {
+    nom: "Mossos d'Esquadra",
+    text: 'En cas d\'urgència, truca al 112. Si no és urgent, pots denunciar a qualsevol comissaria o per internet.',
+    telefon: '112',
+    enllac: 'https://mossos.gencat.cat',
+    enllacText: 'mossos.gencat.cat',
+    icona: 'escut',
+  },
+  {
+    nom: 'INCIBE — Línia d\'ajuda en ciberseguretat',
+    text: 'Telèfon gratuït i confidencial. T\'orienten sobre què fer, en català i castellà.',
+    telefon: '017',
+    enllac: 'https://www.incibe.es/linea-de-ayuda-en-ciberseguridad',
+    enllacText: 'incibe.es',
+    icona: 'telefon',
+  },
+  {
+    nom: 'El teu banc',
+    text: 'Truca al número que surt a la teva targeta o a l\'aplicació del banc. Demana que bloquegin la targeta i que revisin els moviments.',
+    telefon: '',
+    enllac: '',
+    enllacText: '',
+    icona: 'telefon',
+  },
+  {
+    nom: 'Autoritat Catalana de Protecció de Dades (APDCAT)',
+    text: 'Si les teves dades personals han acabat on no tocava, pots presentar-hi una reclamació.',
+    telefon: '',
+    enllac: 'https://apdcat.gencat.cat',
+    enllacText: 'apdcat.gencat.cat',
+    icona: 'escut',
+  },
+];
+---
+<Base
+  titol="He patit una estafa"
+  descripcio="Passos clars i tranquils per saber què fer si has patit una estafa digital: a qui trucar, com denunciar i com protegir els teus comptes."
+  imatge="/imatges/og-connectats.jpg"
+>
+  <section class="hero-ajuda">
+    <div class="contenidor hero-ajuda__interior">
+      <div>
+        <p class="sobretitol sobretitol--avis">Ajuda immediata</p>
+        <h1>Has patit una estafa? Respira. T'ajudem.</h1>
+        <p class="hero-ajuda__entradeta">
+          Et pot passar a tu i li passa a molta gent. No és culpa teva.
+          Aquí tens els passos a seguir, un darrere l'altre.
+        </p>
+        <p class="hero-ajuda__urgencia">
+          <Icona nom="telefon" mida={24} />
+          <span>
+            <strong>Si hi ha diners en joc ara mateix, truca primer al teu banc.</strong>{' '}
+            El número és al dors de la targeta o dins l'aplicació.
+          </span>
+        </p>
+      </div>
+      <img
+        src="/imatges/estafa-acompanyament.svg"
+        width="760"
+        height="520"
+        alt="Il·lustració serena de dues persones assegudes una davant de l'altra: una escolta amb atenció mentre l'altra ensenya el mòbil."
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <!-- 1. Què fer ara mateix -->
+  <section class="seccio" aria-labelledby="ara-mateix">
+    <div class="contenidor contenidor--estret">
+      <h2 id="ara-mateix">Què has de fer ara mateix</h2>
+      <p class="entradeta">Cinc passos. Fes-los en aquest ordre.</p>
+      <ol class="passos">
+        <li>
+          <strong>Mantén la calma i no esborris res</strong>
+          <p>Guarda els missatges, els correus i les captures de pantalla. Són la prova del que ha passat.</p>
+        </li>
+        <li>
+          <strong>Truca al teu banc</strong>
+          <p>Si has donat dades bancàries o has fet un pagament, truca-hi immediatament. Demana que bloquegin la targeta i que mirin de parar el pagament.</p>
+        </li>
+        <li>
+          <strong>Canvia les contrasenyes</strong>
+          <p>Comença pel correu electrònic i després els comptes afectats. Fes servir una contrasenya diferent per a cadascun. Si pots, activa la verificació en dos passos.</p>
+        </li>
+        <li>
+          <strong>Avisa les persones de contacte</strong>
+          <p>Si t'han suplantat, digues a la família i als amics que no facin cas dels missatges que els arribin en nom teu.</p>
+        </li>
+        <li>
+          <strong>Presenta una denúncia</strong>
+          <p>Amb les proves que has guardat, denuncia-ho als Mossos d'Esquadra. Més avall t'expliquem on i com.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2. Alertes recents -->
+  {alertes.length > 0 && (
+    <section class="seccio seccio--suau" aria-labelledby="alertes-recents">
+      <div class="contenidor">
+        <p class="sobretitol sobretitol--avis">Alertes</p>
+        <h2 id="alertes-recents" class="titol-seccio">Estafes que circulen aquests dies</h2>
+        <p class="entradeta">Mira si el que t'ha passat s'assembla a alguna d'aquestes.</p>
+        <ul class="graella graella--3 sense-llista">
+          {alertes.map((e) => (<li><TargetaEntrada entrada={e} /></li>))}
+        </ul>
+        <p class="mes-alertes"><a href="/actualitat/alertes">Totes les alertes <Icona nom="fletxa" mida={18} /></a></p>
+      </div>
+    </section>
+  )}
+
+  <!-- 3. Estafes més habituals -->
+  <section class="seccio" aria-labelledby="habituals">
+    <div class="contenidor contenidor--estret">
+      <h2 id="habituals">Les estafes més habituals</h2>
+      <p class="entradeta">Obre la que s'assembli al teu cas: t'expliquem com es reconeix i què has de fer.</p>
+      {estafes.map((e) => (
+        <Desplegable titol={e.titol} icona="alerta">
+          <h3>Com la pots reconèixer</h3>
+          <ul>{e.reconeixer.map((r) => (<li>{r}</li>))}</ul>
+          <h3>Què has de fer</h3>
+          <ul>{e.fer.map((f) => (<li>{f}</li>))}</ul>
+        </Desplegable>
+      ))}
+    </div>
+  </section>
+
+  <!-- 4. On denunciar -->
+  <section class="seccio seccio--suau" aria-labelledby="denunciar">
+    <div class="contenidor">
+      <h2 id="denunciar" class="titol-seccio">On pots denunciar i demanar ajuda</h2>
+      <p class="entradeta">
+        Denunciar serveix. Encara que no recuperis els diners, ajuda a aturar qui ho fa.
+        <span class="pendent-nota">[PENDENT] Verifiqueu telèfons i adreces abans de publicar.</span>
+      </p>
+      <ul class="graella sense-llista denuncies">
+        {onDenunciar.map((d) => (
+          <li class="targeta denuncia">
+            <span class="denuncia__icona" aria-hidden="true"><Icona nom={d.icona} mida={26} /></span>
+            <h3>{d.nom}</h3>
+            <p>{d.text}</p>
+            <p class="denuncia__accions">
+              {d.telefon && (
+                <a class="boto boto--principal" href={`tel:${d.telefon}`}>
+                  <Icona nom="telefon" mida={18} /> Truca al {d.telefon}
+                </a>
+              )}
+              {d.enllac && (
+                <a class="boto boto--secundari" href={d.enllac} rel="noopener noreferrer" target="_blank">
+                  {d.enllacText} <Icona nom="extern" mida={18} />
+                  <span class="nomes-lector">(s'obre en una finestra nova)</span>
+                </a>
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. Contacta -->
+  <section class="seccio" aria-labelledby="contacta">
+    <div class="contenidor contenidor--estret">
+      <div class="ajuda-final">
+        <h2 id="contacta">Encara tens dubtes?</h2>
+        <p>
+          Escriu-nos i t'ajudem a entendre què ha passat i quins passos et queden.
+          No cal que ho sàpigues explicar amb paraules tècniques.
+        </p>
+        <p class="grup-botons">
+          <a class="boto boto--avis boto--gran" href="/contacte?motiu=estafa">
+            <Icona nom="correu" mida={20} /> Explica'ns el teu cas
+          </a>
+        </p>
+        <p class="nota nota--avis avis-legal-bloc">
+          <strong>Avís:</strong> aquesta associació ofereix orientació i acompanyament,
+          però no substitueix els serveis d'emergència, la policia ni l'assessorament jurídic.
+        </p>
+        <p class="nota">
+          <strong>No ens enviïs mai</strong> contrasenyes, codis de verificació ni dades bancàries,
+          ni per aquest formulari ni per cap altre mitjà. Ningú de confiança no te'ls demanarà mai.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-ajuda {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    background:
+      radial-gradient(55rem 28rem at 10% -10%, var(--avis-suau), transparent 70%),
+      radial-gradient(40rem 25rem at 95% 0%, var(--principal-suau), transparent 70%);
+    border-bottom: 1px solid var(--vora);
+  }
+  .hero-ajuda__interior { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  @media (min-width: 58rem) { .hero-ajuda__interior { grid-template-columns: 1.15fr 1fr; } }
+  .hero-ajuda h1 { font-size: var(--t-h1); max-width: 18ch; }
+  .sobretitol--avis { color: var(--avis); }
+  .hero-ajuda__entradeta {
+    font-size: var(--t-gran);
+    color: var(--text-suau);
+    max-width: 48ch;
+  }
+  .hero-ajuda__urgencia {
+    display: flex;
+    gap: 0.9rem;
+    align-items: start;
+    background: var(--fons-targeta);
+    border: 2px solid var(--avis-vora);
+    border-left: 8px solid var(--avis);
+    border-radius: var(--radi-m);
+    padding: 1.1rem 1.3rem;
+    margin: 0;
+    max-width: 52ch;
+  }
+  .hero-ajuda__urgencia :global(svg) { flex: none; color: var(--avis); margin-top: 0.15em; }
+
+  /* Lectura fàcil: línies curtes i text gran en aquesta pàgina */
+  .passos { font-size: 1.05em; }
+  .passos p { max-width: 58ch; }
+
+  .mes-alertes { margin: 1.75rem 0 0; }
+  .mes-alertes a { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700; }
+
+  .denuncies { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  @media (min-width: 52rem) { .denuncies { grid-template-columns: repeat(2, 1fr); } }
+
+  .denuncia__icona {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--principal-suau);
+    color: var(--principal);
+    margin-bottom: 0.9rem;
+  }
+  .denuncia h3 { font-size: var(--t-h4); }
+  .denuncia p:not(.denuncia__accions) { flex: 1; }
+  .denuncia__accions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1rem 0 0;
+  }
+  .denuncia__accions .boto { min-height: 46px; padding: 0.5rem 1.15rem; font-size: var(--t-petit); }
+
+  .pendent-nota {
+    display: block;
+    font-size: var(--t-mini);
+    color: var(--avis);
+    font-weight: 700;
+    margin-top: 0.4rem;
+  }
+
+  .ajuda-final > p { max-width: 58ch; }
+  .avis-legal-bloc { margin-top: 2rem; }
+</style>

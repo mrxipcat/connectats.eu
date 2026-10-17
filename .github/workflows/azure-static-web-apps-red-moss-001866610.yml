@@ -8,17 +8,43 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+  # Reconstrucció diària. Cal perquè el lloc és estàtic i hi ha contingut que
+  # depèn de la data: les activitats passades deixen de sortir a l'agenda i
+  # l'alerta destacada de la portada s'amaga als 30 dies.
+  schedule:
+    - cron: '15 4 * * *'
+  # Permet llançar un desplegament a mà des de la pestanya «Actions» de GitHub.
+  workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
+      - name: Instal·la Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # Construïm aquí i no dins del contenidor d'Azure (Oryx), perquè Astro
+      # necessita Node 22.22 o posterior i així controlem la versió exacta.
+      - name: Instal·la dependències
+        run: npm ci
+      - name: Construeix la web
+        run: npm run build
+        env:
+          # Adreça del servei que rep el formulari de contacte.
+          # Es configura a GitHub: Settings → Secrets and variables → Actions → Variables.
+          PUBLIC_FORM_ENDPOINT: ${{ vars.PUBLIC_FORM_ENDPOINT }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://connectats.eu' }}
+      # staticwebapp.config.json ha d'anar dins de la carpeta que es publica
+      - name: Copia la configuració d'Azure
+        run: cp staticwebapp.config.json dist/
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -28,9 +54,10 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "/" # Built app content directory - optional
+          app_location: "dist" # Web ja construïda al pas anterior
+          api_location: "" # Sense API
+          output_location: "" # No cal: ja és la carpeta final
+          skip_app_build: true # No tornar a construir dins d'Azure
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

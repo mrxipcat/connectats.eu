@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import LlistaActualitat from '../../../components/LlistaActualitat.astro';
+import { entradesPublicades } from '../../../lib/contingut';
+import { ENTRADES_PER_PAGINA } from '../../../lib/web';
+
+export const getStaticPaths = (async () => {
+  const entrades = await entradesPublicades();
+  const pagines = Math.ceil(entrades.length / ENTRADES_PER_PAGINA);
+  return Array.from({ length: Math.max(0, pagines - 1) }, (_, i) => ({
+    params: { num: String(i + 2) },
+    props: { entrades, pagina: i + 2 },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entrades, pagina } = Astro.props;
+---
+<Base
+  titol={`Actualitat — pàgina ${pagina}`}
+  descripcio="Alertes, articles i notícies de l'associació Connectats."
+  senseIndexar={true}
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol"><a href="/actualitat">Actualitat</a></p>
+      <h1>Alertes, articles i notícies</h1>
+      <p class="entradeta">Pàgina {pagina}</p>
+      <LlistaActualitat entrades={entrades} categoriaActiva="totes" pagina={pagina} baseUrl="/actualitat" />
+    </div>
+  </section>
+</Base>

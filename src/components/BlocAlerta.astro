@@ -1,0 +1,33 @@
+---
+import { formataData, dataISO } from '../lib/web';
+import type { Entrada } from '../lib/contingut';
+import Icona from './Icona.astro';
+
+interface Props { entrada: Entrada; titolSeccio?: string }
+const { entrada, titolSeccio = 'Alerta activa' } = Astro.props;
+---
+<div class="alerta alerta--destacada">
+  <p class="alerta__capcalera">
+    <span class="etiqueta etiqueta--alertes"><Icona nom="alerta" mida={16} /> Alerta</span>
+    <span class="nomes-lector">{titolSeccio}.</span>
+    <time class="meta" datetime={dataISO(entrada.data.data)}>{formataData(entrada.data.data)}</time>
+  </p>
+  <h2 class="alerta__titol">
+    <a href={`/actualitat/${entrada.id}`}>{entrada.data.titol}</a>
+  </h2>
+  <p class="alerta__resum">{entrada.data.resum}</p>
+  <p class="alerta__peu">
+    <a class="boto boto--avis" href={`/actualitat/${entrada.id}`}>
+      Llegeix l'alerta sencera <Icona nom="fletxa" mida={18} />
+    </a>
+  </p>
+</div>
+
+<style>
+  .alerta--destacada { box-shadow: var(--ombra-s); }
+  .alerta__titol { font-size: var(--t-h3); margin-bottom: 0.4rem; }
+  .alerta__titol a { color: var(--text); text-decoration: none; }
+  .alerta__titol a:hover { text-decoration: underline; color: var(--avis-fort); }
+  .alerta__resum { margin-bottom: 1.1rem; max-width: 70ch; }
+  .alerta__peu { margin: 0; }
+</style>

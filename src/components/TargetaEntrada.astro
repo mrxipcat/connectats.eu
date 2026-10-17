@@ -1,0 +1,57 @@
+---
+import { categories, formataData, dataISO } from '../lib/web';
+import type { Entrada } from '../lib/contingut';
+import Icona from './Icona.astro';
+
+interface Props { entrada: Entrada; nivellTitol?: 2 | 3 | 4 }
+const { entrada, nivellTitol = 3 } = Astro.props;
+const { titol, data, categoria, resum, imatge, imatge_alt } = entrada.data;
+const cat = categories[categoria];
+const Titol = `h${nivellTitol}` as 'h2' | 'h3' | 'h4';
+const esAlerta = categoria === 'alertes';
+---
+<article class:list={['targeta', 'targeta--enllacable', 'enllac-targeta', 'targeta-entrada', { 'targeta-entrada--alerta': esAlerta }]}>
+  {imatge && (
+    <img class="targeta-entrada__imatge" src={imatge} alt={imatge_alt ?? ''} loading="lazy" decoding="async" width="640" height="360" />
+  )}
+  <p class="meta">
+    <span class={`etiqueta etiqueta--${categoria}`}>
+      {esAlerta && <Icona nom="alerta" mida={16} />}
+      {cat.nom}
+    </span>
+    <time datetime={dataISO(data)}>{formataData(data)}</time>
+  </p>
+  <Titol class="targeta-entrada__titol">
+    <a href={`/actualitat/${entrada.id}`}>{titol}</a>
+  </Titol>
+  <p>{resum}</p>
+  <p class="targeta-entrada__mes" aria-hidden="true">
+    Llegeix-ne més <Icona nom="fletxa" mida={18} />
+  </p>
+</article>
+
+<style>
+  .targeta-entrada { gap: 0.1rem; }
+  .targeta-entrada--alerta { border-left: 6px solid var(--avis); }
+  .targeta-entrada__imatge {
+    width: calc(100% + 2 * clamp(1.25rem, 2.5vw, 1.75rem));
+    margin: calc(-1 * clamp(1.25rem, 2.5vw, 1.75rem)) calc(-1 * clamp(1.25rem, 2.5vw, 1.75rem)) 1.1rem;
+    border-radius: var(--radi-l) var(--radi-l) 0 0;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--fons-suau);
+  }
+  .targeta-entrada__titol { margin: 0.55rem 0 0.45rem; }
+  .targeta-entrada__titol a { color: var(--text); text-decoration: none; }
+  .targeta-entrada__titol a:hover { color: var(--principal); text-decoration: underline; }
+  .targeta-entrada p:not(.meta):not(.targeta-entrada__mes) { flex: 1; }
+  .targeta-entrada__mes {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.4rem 0 0;
+    color: var(--principal);
+    font-weight: 700;
+    font-size: var(--t-petit);
+  }
+</style>

@@ -1,0 +1,81 @@
+/**
+ * Dades generals de la web.
+ * Canviar aquí el correu, les xarxes o les dades de l'entitat es reflecteix a tot el lloc.
+ */
+export const web = {
+  nom: 'Connectats',
+  lema: 'Digitalment Segurs',
+  nomLlarg: 'Associació Connectats — Digitalment Segurs',
+  descripcio:
+    'Formació, assessorament i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
+  correu: 'info@connectats.eu', // [PENDENT] confirmar adreça definitiva
+  telefon: '', // [PENDENT] opcional
+  adreca: '', // [PENDENT] opcional
+  nif: 'G-00000000', // [PENDENT]
+  registre: 'Registre d\'Associacions de la Generalitat de Catalunya, núm. [PENDENT]', // [PENDENT]
+  xarxes: [
+    { nom: 'Mastodon', url: 'https://mastodon.social/@connectats', etiqueta: 'Mastodon (s\'obre en una finestra nova)' }, // [PENDENT]
+    { nom: 'LinkedIn', url: 'https://www.linkedin.com/company/connectats', etiqueta: 'LinkedIn (s\'obre en una finestra nova)' }, // [PENDENT]
+    { nom: 'Instagram', url: 'https://www.instagram.com/connectats', etiqueta: 'Instagram (s\'obre en una finestra nova)' }, // [PENDENT]
+  ],
+} as const;
+
+export const menu = [
+  { text: 'Qui som', url: '/qui-som' },
+  { text: 'Què fem', url: '/que-fem' },
+  { text: 'Recursos', url: '/recursos' },
+  { text: 'Actualitat', url: '/actualitat' },
+  { text: 'Contacte', url: '/contacte' },
+] as const;
+
+export const menuLegal = [
+  { text: 'Avís legal', url: '/avis-legal' },
+  { text: 'Privadesa i galetes', url: '/privadesa' },
+  { text: 'Accessibilitat', url: '/accessibilitat' },
+  { text: 'Transparència', url: '/transparencia' },
+] as const;
+
+export const categories = {
+  alertes: { nom: 'Alerta', plural: 'Alertes', url: '/actualitat/alertes' },
+  blog: { nom: 'Blog', plural: 'Blog', url: '/actualitat/blog' },
+  noticies: { nom: 'Notícia', plural: 'Notícies', url: '/actualitat/noticies' },
+} as const;
+
+export const motiusContacte = [
+  { valor: 'formacio', text: 'Demanar una formació' },
+  { valor: 'estafa', text: 'He patit una estafa' },
+  { valor: 'collaboracio', text: 'Col·laboració' },
+  { valor: 'altres', text: 'Altres' },
+] as const;
+
+/** Dies a partir dels quals una alerta deixa de mostrar-se com a destacada a l'inici. */
+export const DIES_ALERTA_VIGENT = 30;
+
+/** Nombre d'entrades per pàgina al llistat d'Actualitat. */
+export const ENTRADES_PER_PAGINA = 12;
+
+export function formataData(data: Date, opcions: Intl.DateTimeFormatOptions = {}): string {
+  return new Intl.DateTimeFormat('ca-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Madrid',
+    ...opcions,
+  }).format(data);
+}
+
+export function formataDataHora(data: Date): string {
+  return new Intl.DateTimeFormat('ca-ES', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Madrid',
+  }).format(data);
+}
+
+export function dataISO(data: Date): string {
+  return data.toISOString().slice(0, 10);
+}

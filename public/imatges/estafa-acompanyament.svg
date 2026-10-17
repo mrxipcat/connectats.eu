@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" width="760" height="520" role="img" aria-label="Il·lustració serena de dues persones assegudes una davant de l'altra: una escolta amb atenció mentre l'altra ensenya el mòbil, en un ambient tranquil amb una tassa sobre la taula.">
+  <style>
+    .fons-a { fill: #D6EAF8; } .fons-b { fill: #D4F5DC; }
+    .pell-1 { fill: #E9C6A8; } .pell-2 { fill: #C68E63; }
+    .cabell-1 { fill: #B7C7D0; } .cabell-2 { fill: #3C2A21; }
+    .roba-1 { fill: #0A6B96; } .roba-2 { fill: #16682F; }
+    .brac-1 { stroke: #0A6B96; } .brac-2 { stroke: #16682F; }
+    .taula { fill: #D5E1E8; } .taula-2 { fill: #B7C7D0; }
+    .aparell { fill: #1A2B33; } .pantalla { fill: #5BB3F0; }
+    .tassa { fill: #FFFFFF; stroke: #B7C7D0; }
+    .vapor { stroke: #A9D8F3; }
+    .ombra { fill: #0A6B96; opacity: .08; }
+    .planta { fill: #35C45C; } .test { fill: #C68E63; }
+    @media (prefers-color-scheme: dark) {
+      .fons-a { fill: #153446; } .fons-b { fill: #14361F; }
+      .roba-1 { fill: #2E96D2; } .roba-2 { fill: #22A349; }
+      .brac-1 { stroke: #2E96D2; } .brac-2 { stroke: #22A349; }
+      .taula { fill: #3A505C; } .taula-2 { fill: #273A44; }
+      .aparell { fill: #D5E1E8; } .pantalla { fill: #0A6B96; }
+      .tassa { fill: #1C303A; stroke: #3A505C; } .vapor { stroke: #2E96D2; }
+      .ombra { fill: #000; opacity: .25; } .cabell-1 { fill: #8FA3AD; }
+    }
+  </style>
+
+  <circle class="fons-a" cx="380" cy="252" r="228" opacity=".55"/>
+  <ellipse class="fons-b" cx="596" cy="326" rx="150" ry="140" opacity=".4"/>
+
+  <!-- planta, ambient calmat -->
+  <g transform="translate(58 300)">
+    <path class="planta" d="M34 86 C 4 60, 2 24, 30 4 C 46 30, 48 60, 36 86 Z" opacity=".85"/>
+    <path class="planta" d="M38 86 C 72 66, 80 32, 58 10 C 40 34, 32 62, 38 86 Z" opacity=".6"/>
+    <path class="test" d="M12 86 H64 L56 134 H20 Z"/>
+  </g>
+
+  <!-- persona que acompanya (esquerra) -->
+  <g>
+    <ellipse class="ombra" cx="246" cy="462" rx="74" ry="12"/>
+    <path class="roba-1" d="M196 456 L202 312 Q246 284 290 312 L296 456 Z"/>
+    <path class="brac-1" d="M208 326 L196 396 L268 404" fill="none" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="pell-1" cx="276" cy="404" r="12"/>
+    <circle class="pell-1" cx="246" cy="252" r="40"/>
+    <path class="cabell-1" d="M206 250 a40 40 0 0 1 80 0 q-12 -24 -40 -24 t-40 24 Z"/>
+  </g>
+
+  <!-- persona acompanyada (dreta), ensenyant el mòbil -->
+  <g>
+    <ellipse class="ombra" cx="536" cy="468" rx="78" ry="12"/>
+    <path class="roba-2" d="M484 462 L490 318 Q536 288 582 318 L588 462 Z"/>
+    <path class="brac-2" d="M576 332 L584 398 L512 410" fill="none" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="pell-2" cx="504" cy="410" r="13"/>
+    <circle class="pell-2" cx="536" cy="256" r="42"/>
+    <path class="cabell-2" d="M494 254 a42 42 0 0 1 84 0 q-12 -26 -42 -26 t-42 26 Z"/>
+  </g>
+
+  <!-- taula -->
+  <rect class="taula" x="256" y="400" width="268" height="18" rx="9"/>
+  <rect class="taula-2" x="300" y="418" width="14" height="62" rx="5"/>
+  <rect class="taula-2" x="466" y="418" width="14" height="62" rx="5"/>
+
+  <!-- mòbil sobre la taula, compartit -->
+  <rect class="aparell" x="368" y="356" width="44" height="46" rx="7" transform="rotate(-10 390 379)"/>
+  <rect class="pantalla" x="373" y="361" width="34" height="33" rx="3" transform="rotate(-10 390 379)"/>
+
+  <!-- tassa -->
+  <g transform="translate(286 356)">
+    <rect class="tassa" x="0" y="14" width="34" height="30" rx="6" stroke-width="3"/>
+    <path class="tassa" d="M34 22 h8 a8 8 0 0 1 0 16 h-8" fill="none" stroke-width="3"/>
+    <g class="vapor" fill="none" stroke-width="3" stroke-linecap="round" opacity=".9">
+      <path d="M10 8 q5 -6 0 -12"/><path d="M22 8 q5 -6 0 -12"/>
+    </g>
+  </g>
+</svg>

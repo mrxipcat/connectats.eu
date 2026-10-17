@@ -1,0 +1,45 @@
+---
+import PaginaText from '../layouts/PaginaText.astro';
+import { web } from '../lib/web';
+---
+<PaginaText
+  titol="Avís legal"
+  descripcio="Dades identificatives, condicions d'ús i propietat intel·lectual del lloc web de l'associació Connectats."
+  entradeta="Dades identificatives i condicions d'ús d'aquest lloc web."
+  actualitzat="16 d'octubre de 2026"
+  pendent={true}
+>
+  <h2>1. Dades identificatives</h2>
+  <p>En compliment de la Llei 34/2002, d'11 de juliol, de serveis de la societat de la informació i de comerç electrònic (LSSI-CE), es fan constar les dades següents:</p>
+  <ul>
+    <li><strong>Titular:</strong> {web.nomLlarg} <span class="pendent">[PENDENT]</span></li>
+    <li><strong>NIF:</strong> {web.nif} <span class="pendent">[PENDENT]</span></li>
+    <li><strong>Domicili social:</strong> <span class="pendent">[PENDENT: adreça completa]</span></li>
+    <li><strong>Correu electrònic:</strong> <a href={`mailto:${web.correu}`}>{web.correu}</a></li>
+    <li><strong>Inscripció registral:</strong> {web.registre}</li>
+  </ul>
+
+  <h2>2. Objecte</h2>
+  <p>Aquest lloc web té una finalitat informativa i divulgativa. Recull informació sobre les activitats de l'associació i materials de sensibilització en seguretat digital. No s'hi fa cap activitat comercial ni s'hi venen productes o serveis.</p>
+
+  <h2>3. Condicions d'ús</h2>
+  <p>L'accés a aquest lloc web és gratuït i no requereix registre. Qui hi accedeix es compromet a fer-ne un ús conforme a la llei i a no dur a terme accions que puguin danyar-ne el funcionament.</p>
+
+  <h2>4. Responsabilitat sobre els continguts</h2>
+  <p>La informació publicada té caràcter orientatiu i general. L'associació hi dedica la màxima cura, però no pot garantir que tota la informació sigui completa o estigui actualitzada en tot moment, especialment pel que fa a telèfons, adreces i procediments d'organismes externs.</p>
+  <p><strong>Els continguts d'aquest lloc no substitueixen l'assessorament jurídic professional, l'atenció dels cossos de seguretat ni els serveis d'emergència.</strong></p>
+
+  <h2>5. Enllaços a altres webs</h2>
+  <p>Aquest lloc conté enllaços a pàgines de tercers (administracions, organismes públics i entitats). L'associació no es fa responsable dels continguts ni de les polítiques de privadesa d'aquests llocs.</p>
+
+  <h2>6. Propietat intel·lectual</h2>
+  <p>Els textos, les il·lustracions i els materials propis publicats en aquest lloc es difonen sota llicència <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" rel="license noopener noreferrer" target="_blank">Creative Commons Reconeixement-CompartirIgual 4.0</a>, llevat que s'indiqui el contrari. <span class="pendent">[PENDENT DE CONFIRMAR]</span></p>
+  <p>El nom i el logotip de l'associació són propietat de l'entitat i no es poden fer servir sense autorització.</p>
+
+  <h2>7. Legislació aplicable</h2>
+  <p>Aquest avís legal es regeix per la legislació espanyola i catalana aplicable.</p>
+</PaginaText>
+
+<style>
+  .pendent { color: var(--avis); font-weight: 700; }
+</style>

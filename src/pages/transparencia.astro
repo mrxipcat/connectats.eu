@@ -1,0 +1,63 @@
+---
+import PaginaText from '../layouts/PaginaText.astro';
+import { web } from '../lib/web';
+---
+<PaginaText
+  titol="Transparència"
+  descripcio="Estatuts, junta directiva, comptes anuals i finançament de l'associació Connectats."
+  entradeta="Som una entitat petita, però creiem que qui explica com protegir-se també ha d'explicar com funciona."
+  actualitzat="16 d'octubre de 2026"
+  pendent={true}
+>
+  <h2>Qui som</h2>
+  <ul>
+    <li><strong>Denominació:</strong> {web.nomLlarg}</li>
+    <li><strong>NIF:</strong> {web.nif} <span class="pendent">[PENDENT]</span></li>
+    <li><strong>Inscripció:</strong> {web.registre}</li>
+    <li><strong>Àmbit d'actuació:</strong> Catalunya</li>
+    <li><strong>Any de constitució:</strong> <span class="pendent">[PENDENT]</span></li>
+  </ul>
+
+  <h2>Estatuts</h2>
+  <p>
+    <a href="/fitxers/estatuts-connectats.pdf">Estatuts de l'associació (PDF)</a>
+    <span class="pendent">[PENDENT: cal pujar el fitxer a la carpeta public/fitxers/]</span>
+  </p>
+
+  <h2>Junta directiva</h2>
+  <table>
+    <thead>
+      <tr><th scope="col">Càrrec</th><th scope="col">Persona</th><th scope="col">Des de</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Presidència</td><td><span class="pendent">[PENDENT]</span></td><td><span class="pendent">[PENDENT]</span></td></tr>
+      <tr><td>Secretaria</td><td><span class="pendent">[PENDENT]</span></td><td><span class="pendent">[PENDENT]</span></td></tr>
+      <tr><td>Tresoreria</td><td><span class="pendent">[PENDENT]</span></td><td><span class="pendent">[PENDENT]</span></td></tr>
+    </tbody>
+  </table>
+  <p>Els càrrecs de la junta directiva no són remunerats.</p>
+
+  <h2>Comptes anuals</h2>
+  <p>Publiquem els comptes de cada exercici un cop aprovats per l'assemblea.</p>
+  <ul>
+    <li><span class="pendent">[PENDENT]</span> Comptes de l'exercici 2026 (es publicaran el 2027).</li>
+  </ul>
+
+  <h2>Finançament i subvencions</h2>
+  <p>Els nostres ingressos provenen de <span class="pendent">[PENDENT: quotes de persones sòcies, convenis amb administracions, subvencions, formacions a entitats]</span>.</p>
+  <table>
+    <thead>
+      <tr><th scope="col">Any</th><th scope="col">Entitat atorgant</th><th scope="col">Concepte</th><th scope="col">Import</th></tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="4"><span class="pendent">[PENDENT]</span> Encara no s'ha rebut cap subvenció, o bé cal omplir-ho.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Com ens pots demanar més informació</h2>
+  <p>Qualsevol persona pot demanar-nos informació addicional sobre el funcionament de l'entitat escrivint a <a href={`mailto:${web.correu}`}>{web.correu}</a>.</p>
+</PaginaText>
+
+<style>
+  .pendent { color: var(--avis); font-weight: 700; }
+</style>

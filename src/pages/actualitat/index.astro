@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import LlistaActualitat from '../../components/LlistaActualitat.astro';
+import Icona from '../../components/Icona.astro';
+import { entradesPublicades } from '../../lib/contingut';
+
+const entrades = await entradesPublicades();
+---
+<Base
+  titol="Actualitat"
+  descripcio="Alertes sobre estafes en circulació, articles divulgatius i notícies de l'associació Connectats."
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol">Actualitat</p>
+      <h1>Alertes, articles i notícies</h1>
+      <p class="entradeta">
+        Avisos ràpids sobre estafes en circulació, articles per entendre-hi més i notícies del que fem.
+        <a href="/rss.xml" class="enllac-rss"><Icona nom="rss" mida={18} /> Subscriu-t'hi per RSS</a>
+      </p>
+      <LlistaActualitat entrades={entrades} categoriaActiva="totes" pagina={1} baseUrl="/actualitat" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .enllac-rss {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--t-petit);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,17 @@
+# dependències
+node_modules/
+
+# sortida de la compilació
+dist/
+.astro/
+
+# variables d'entorn (mai al repositori)
+.env
+.env.production
+.env.local
+
+# sistema operatiu i editors
+.DS_Store
+.idea/
+.vscode/
+*.log

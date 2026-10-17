@@ -1,0 +1,264 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import { activitatsFutures } from '../lib/contingut';
+import { formataDataHora, dataISO } from '../lib/web';
+
+const activitats = await activitatsFutures();
+
+const temes = [
+  'Estafes en línia i missatges fraudulents',
+  'Contrasenyes i verificació en dos passos',
+  'Privadesa a les xarxes socials',
+  'Protecció de dades personals',
+  'Ús segur del mòbil',
+  'Desinformació i verificació de continguts',
+  'Ciberassetjament i convivència digital',
+];
+
+const publics = [
+  { titol: 'Centres educatius', text: 'Sessions per a alumnat, professorat i famílies, adaptades per cicles.' },
+  { titol: 'Famílies', text: 'Com acompanyar infants i adolescents sense convertir-se en vigilant.' },
+  { titol: 'Gent gran', text: 'Ritme pausat, exemples reals i pràctica amb el mòbil a la mà.' },
+  { titol: 'Entitats socials', text: 'Formació per a equips que acompanyen persones en situació de vulnerabilitat.' },
+  { titol: 'Petites organitzacions', text: 'Mesures bàsiques i assumibles per a associacions i microempreses.' },
+];
+---
+<Base
+  titol="Què fem"
+  descripcio="Tallers i xerrades de seguretat digital, assessorament a persones i entitats, i agenda d'activitats obertes."
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol">Què fem</p>
+      <h1>Formació, acompanyament i activitats obertes</h1>
+      <p class="entradeta">
+        Portem la seguretat digital allà on hi ha les persones: escoles, casals, biblioteques,
+        entitats i petites organitzacions. En català, en llenguatge planer i sense tecnicismes.
+      </p>
+      <nav class="indexs" aria-label="Seccions d'aquesta pàgina">
+        <a href="#tallers">Tallers i xerrades</a>
+        <a href="#assessorament">Assessorament</a>
+        <a href="#agenda">Agenda</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Tallers -->
+  <section class="seccio" id="tallers" aria-labelledby="titol-tallers">
+    <div class="contenidor">
+      <div class="bloc-dues">
+        <div class="prosa">
+          <p class="sobretitol">01 — Formació</p>
+          <h2 id="titol-tallers">Tallers i xerrades</h2>
+          <p>
+            Sessions d'entre una i dues hores, pràctiques i participatives. No fem exposicions
+            teòriques: treballem amb exemples reals, sovint amb els missatges que els mateixos
+            assistents porten al mòbil.
+          </p>
+          <p>
+            <strong>Modalitat:</strong> presencial o en línia.{' '}
+            <strong>Idioma:</strong> català (també en castellà si cal).
+          </p>
+          <h3>Temes que treballem</h3>
+          <ul class="llista-marcada">
+            {temes.map((t) => (<li><Icona nom="check" mida={20} /> <span>{t}</span></li>))}
+          </ul>
+        </div>
+        <img
+          src="/imatges/que-fem-taller.svg"
+          width="800"
+          height="520"
+          alt="Il·lustració d'un taller: una persona fa una xerrada davant d'una pantalla amb un escut de seguretat mentre quatre persones assegudes l'escolten."
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <h3 class="subtitol-bloc">A qui ens adrecem</h3>
+      <ul class="graella graella--3 sense-llista">
+        {publics.map((p) => (
+          <li class="targeta public">
+            <h4>{p.titol}</h4>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Assessorament -->
+  <section class="seccio seccio--suau" id="assessorament" aria-labelledby="titol-assessorament">
+    <div class="contenidor">
+      <div class="bloc-dues bloc-dues--invers">
+        <div class="prosa">
+          <p class="sobretitol">02 — Acompanyament</p>
+          <h2 id="titol-assessorament">Assessorament a persones i entitats</h2>
+          <p>
+            Si has patit una estafa o un incident de seguretat, t'ajudem a entendre què ha passat,
+            quins passos has de fer ara i com evitar que torni a passar. Escoltem primer i no jutgem:
+            caure en una estafa no vol dir ser ingenu, vol dir haver trobat un engany ben fet.
+          </p>
+          <p>
+            A les entitats i petites organitzacions les acompanyem a fer una revisió bàsica: comptes
+            compartits, còpies de seguretat, protecció de dades de les persones sòcies i protocol
+            davant d'un incident.
+          </p>
+          <p class="nota nota--avis">
+            <strong>Important:</strong> oferim orientació i acompanyament, però no substituïm els
+            serveis d'emergència, la policia ni l'assessorament jurídic.
+          </p>
+          <p>
+            <a class="boto boto--avis" href="/he-patit-una-estafa">
+              <Icona nom="alerta" mida={20} /> Acabo de patir una estafa
+            </a>
+          </p>
+        </div>
+        <img
+          src="/imatges/estafa-acompanyament.svg"
+          width="760"
+          height="520"
+          alt="Il·lustració serena de dues persones assegudes una davant de l'altra: una escolta amb atenció mentre l'altra ensenya el mòbil."
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Agenda -->
+  <section class="seccio" id="agenda" aria-labelledby="titol-agenda">
+    <div class="contenidor">
+      <p class="sobretitol">03 — Agenda</p>
+      <h2 id="titol-agenda" class="titol-seccio">Properes activitats</h2>
+      <p class="entradeta">Activitats obertes. Les que ja han passat no es mostren.</p>
+
+      {activitats.length > 0 ? (
+        <ul class="sense-llista agenda">
+          {activitats.map((a) => (
+            <li class="targeta activitat">
+              <div class="activitat__data">
+                <time datetime={dataISO(a.data.data)}>
+                  <span class="activitat__dia">{a.data.data.toLocaleDateString('ca-ES', { day: 'numeric', timeZone: 'Europe/Madrid' })}</span>
+                  <span class="activitat__mes">{a.data.data.toLocaleDateString('ca-ES', { month: 'short', timeZone: 'Europe/Madrid' })}</span>
+                  <span class="activitat__any">{a.data.data.getFullYear()}</span>
+                </time>
+              </div>
+              <div class="activitat__cos">
+                <h3>{a.data.titol}</h3>
+                <p class="meta">
+                  <span><Icona nom="calendari" mida={18} /> {formataDataHora(a.data.data)}</span>
+                  <span><Icona nom={a.data.modalitat === 'en línia' ? 'pantalla' : 'lloc'} mida={18} /> {a.data.lloc}</span>
+                  <span class="etiqueta etiqueta--noticies">{a.data.modalitat === 'en línia' ? 'En línia' : 'Presencial'}</span>
+                </p>
+                {a.data.descripcio && <p>{a.data.descripcio}</p>}
+                {a.data.enllac_inscripcio && (
+                  <p class="activitat__accio">
+                    <a class="boto boto--secundari" href={a.data.enllac_inscripcio} rel="noopener noreferrer" target="_blank">
+                      Inscripció <Icona nom="extern" mida={18} />
+                      <span class="nomes-lector">(s'obre en una finestra nova)</span>
+                    </a>
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="nota nota--principal">
+          Ara mateix no hi ha activitats programades. Vols organitzar-ne una?
+          <a href="/contacte?motiu=formacio">Contacta'ns.</a>
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="seccio seccio--compacta">
+    <div class="contenidor centrat">
+      <div class="crida-final">
+        <h2>Vols una formació per al teu grup?</h2>
+        <p>Diguen's qui sou, quantes persones sereu i què us preocupa. Et proposarem una sessió a mida.</p>
+        <a class="boto boto--principal boto--gran" href="/contacte?motiu=formacio">
+          Demana una formació <Icona nom="fletxa" mida={20} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .indexs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .indexs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.4rem 1.1rem;
+    border: 1px solid var(--vora-forta);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .indexs a:hover { background: var(--principal-suau); color: var(--principal-fort); border-color: var(--principal-vora); }
+
+  .bloc-dues { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  @media (min-width: 58rem) {
+    .bloc-dues { grid-template-columns: 1.15fr 1fr; }
+    .bloc-dues--invers > :first-child { order: 2; }
+  }
+
+  .llista-marcada { list-style: none; padding: 0; }
+  .llista-marcada li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: start;
+    margin-bottom: 0.55rem;
+  }
+  .llista-marcada :global(svg) { flex: none; margin-top: 0.3em; color: var(--accent); }
+
+  .subtitol-bloc { margin: clamp(2rem, 5vw, 3rem) 0 1.25rem; }
+  .public h4 { font-size: var(--t-gran); margin-bottom: 0.3rem; }
+  .public p { margin: 0; }
+
+  .agenda { display: grid; gap: 1rem; }
+  .activitat { flex-direction: row; gap: 1.35rem; align-items: start; }
+  .activitat__data { flex: none; }
+  .activitat__data time {
+    display: grid;
+    place-items: center;
+    width: 82px;
+    padding: 0.6rem 0.3rem;
+    border-radius: var(--radi-m);
+    background: var(--principal-suau);
+    color: var(--principal);
+    border: 1px solid var(--principal-vora);
+    line-height: 1.15;
+  }
+  .activitat__dia { font-size: 1.9rem; font-weight: 800; }
+  .activitat__mes { text-transform: uppercase; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; }
+  .activitat__any { font-size: 0.8rem; color: var(--text-suau); }
+  .activitat__cos { flex: 1; }
+  .activitat__cos h3 { font-size: var(--t-h4); margin-bottom: 0.5rem; }
+  .activitat .meta { margin-bottom: 0.7rem; }
+  .activitat .meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .activitat__accio { margin: 0.9rem 0 0; }
+  @media (max-width: 34rem) {
+    .activitat { flex-direction: column; }
+    .activitat__data time { width: auto; flex-direction: row; gap: 0.4rem; padding: 0.4rem 0.9rem; }
+    .activitat__dia { font-size: 1.3rem; }
+  }
+
+  .crida-final {
+    padding: clamp(1.75rem, 5vw, 3rem);
+    border-radius: var(--radi-xl);
+    background: var(--accent-suau);
+    border: 1px solid var(--accent-vora);
+  }
+  .crida-final h2 { font-size: var(--t-h3); }
+  .crida-final p { max-width: 54ch; margin-inline: auto; margin-bottom: 1.5rem; }
+</style>

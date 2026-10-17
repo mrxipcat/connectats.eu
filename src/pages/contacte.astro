@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import { motiusContacte, web } from '../lib/web';
+
+// Servei d'enviament del formulari. Es configura amb la variable d'entorn
+// PUBLIC_FORM_ENDPOINT (vegeu el fitxer .env.example i el README).
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const configurat = endpoint.length > 0;
+---
+<Base
+  titol="Contacte"
+  descripcio="Escriu-nos per demanar una formació, explicar-nos un cas d'estafa o proposar una col·laboració."
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol">Contacte</p>
+      <h1>Parlem-ne</h1>
+      <p class="entradeta">
+        Som un equip petit: et respondrà una persona, normalment en un o dos dies feiners.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccio seccio--compacta">
+    <div class="contenidor contacte">
+      <div class="contacte__formulari">
+        <p class="nota nota--avis avis-dades">
+          <Icona nom="alerta" mida={22} />
+          <span>
+            <strong>No ens enviïs mai contrasenyes, codis de verificació ni dades bancàries</strong>{' '}
+            per aquest formulari ni per cap altre mitjà.
+          </span>
+        </p>
+
+        {!configurat && (
+          <p class="nota nota--principal">
+            <strong>[PENDENT]</strong> El formulari encara no està connectat a cap servei d'enviament.
+            Mentrestant, escriu-nos directament a <a href={`mailto:${web.correu}`}>{web.correu}</a>.
+            Les instruccions per connectar-lo són al fitxer <code>README.md</code>.
+          </p>
+        )}
+
+        <form
+          class="formulari"
+          method="post"
+          action={configurat ? endpoint : undefined}
+          id="formulari-contacte"
+        >
+          <p class="formulari__obligatoris">Els camps amb <span class="obligatori">*</span> són obligatoris.</p>
+
+          <div class="camp">
+            <label for="nom">Nom <span class="obligatori" aria-hidden="true">*</span></label>
+            <input type="text" id="nom" name="nom" autocomplete="name" required />
+          </div>
+
+          <div class="camp">
+            <label for="correu">Correu electrònic <span class="obligatori" aria-hidden="true">*</span></label>
+            <span class="ajuda" id="ajuda-correu">Només el farem servir per respondre't.</span>
+            <input type="email" id="correu" name="correu" autocomplete="email" aria-describedby="ajuda-correu" required />
+          </div>
+
+          <div class="camp">
+            <label for="telefon">Telèfon <span class="opcional">(opcional)</span></label>
+            <input type="tel" id="telefon" name="telefon" autocomplete="tel" />
+          </div>
+
+          <div class="camp">
+            <label for="motiu">Motiu <span class="obligatori" aria-hidden="true">*</span></label>
+            <select id="motiu" name="motiu" required>
+              {motiusContacte.map((m) => (<option value={m.valor}>{m.text}</option>))}
+            </select>
+          </div>
+
+          <div class="camp">
+            <label for="missatge">Missatge <span class="obligatori" aria-hidden="true">*</span></label>
+            <span class="ajuda" id="ajuda-missatge">
+              Explica'ns-ho amb les teves paraules. No cal cap llenguatge tècnic.
+            </span>
+            <textarea id="missatge" name="missatge" rows="8" aria-describedby="ajuda-missatge" required></textarea>
+          </div>
+
+          <!-- Camp trampa contra el correu brossa. Les persones no el veuen. -->
+          <div class="parany" aria-hidden="true">
+            <label for="lloc-web">Deixa aquest camp buit</label>
+            <input type="text" id="lloc-web" name="lloc-web" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="camp casella">
+            <input type="checkbox" id="privadesa" name="privadesa" value="si" required />
+            <label for="privadesa">
+              He llegit i accepto la <a href="/privadesa">política de privadesa</a>{' '}
+              i autoritzo que es tractin les meves dades per respondre'm.
+              <span class="obligatori" aria-hidden="true">*</span>
+            </label>
+          </div>
+
+          <p>
+            <button type="submit" class="boto boto--principal boto--gran" disabled={!configurat}>
+              <Icona nom="correu" mida={20} /> Envia el missatge
+            </button>
+          </p>
+        </form>
+      </div>
+
+      <aside class="contacte__dades" aria-label="Altres vies de contacte">
+        <div class="targeta">
+          <h2>Per correu electrònic</h2>
+          <p>
+            <a class="contacte__correu" href={`mailto:${web.correu}`}>
+              <Icona nom="correu" mida={20} /> {web.correu}
+            </a>
+          </p>
+          <p class="meta">Resposta habitual: 1-2 dies feiners. <span class="pendent">[PENDENT]</span></p>
+        </div>
+
+        <div class="targeta">
+          <h2>A les xarxes</h2>
+          <ul class="sense-llista xarxes">
+            {web.xarxes.map((x) => (
+              <li>
+                <a href={x.url} rel="me noopener noreferrer" target="_blank">
+                  <Icona nom="extern" mida={20} /> {x.nom}
+                  <span class="nomes-lector">(s'obre en una finestra nova)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="meta"><span class="pendent">[PENDENT]</span> Confirmeu els perfils reals.</p>
+        </div>
+
+        <div class="targeta targeta--avis">
+          <h2>És urgent?</h2>
+          <p>
+            Si has patit una estafa ara mateix, no esperis la nostra resposta:
+            truca al teu banc i consulta els passos immediats.
+          </p>
+          <p>
+            <a class="boto boto--avis" href="/he-patit-una-estafa">
+              <Icona nom="alerta" mida={18} /> He patit una estafa
+            </a>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Preselecciona el motiu a partir del paràmetre ?motiu= de l'adreça.
+  const motiu = new URLSearchParams(window.location.search).get('motiu');
+  const select = document.getElementById('motiu');
+  if (motiu && select instanceof HTMLSelectElement) {
+    const opcio = Array.from(select.options).find((o) => o.value === motiu);
+    if (opcio) select.value = motiu;
+  }
+</script>
+
+<style>
+  .contacte { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  @media (min-width: 58rem) { .contacte { grid-template-columns: 1.4fr 1fr; } }
+
+  .avis-dades {
+    display: flex;
+    gap: 0.85rem;
+    align-items: start;
+    margin-bottom: 1.5rem;
+  }
+  .avis-dades :global(svg) { flex: none; color: var(--avis); margin-top: 0.15em; }
+
+  .formulari { max-width: 44rem; }
+  .formulari__obligatoris { font-size: var(--t-petit); color: var(--text-suau); }
+  .opcional { font-weight: 400; color: var(--text-suau); font-size: var(--t-petit); }
+  button[disabled] { opacity: 0.55; cursor: not-allowed; }
+  button[disabled]:hover { transform: none; }
+
+  .contacte__dades { display: grid; gap: 1rem; }
+  .contacte__dades h2 { font-size: var(--t-h4); }
+  .contacte__correu,
+  .xarxes a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-weight: 600;
+  }
+  .xarxes li { margin: 0; }
+  .targeta--avis { border-color: var(--avis-vora); background: var(--avis-suau); }
+  .targeta--avis p:last-child { margin-bottom: 0; }
+  .pendent { color: var(--avis); font-weight: 700; }
+</style>

@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+---
+<Base
+  titol="Pàgina no trobada"
+  descripcio="La pàgina que buscaves no existeix o ha canviat d'adreça."
+  senseIndexar={true}
+>
+  <section class="seccio centrat">
+    <div class="contenidor contenidor--estret">
+      <p class="sobretitol">Error 404</p>
+      <h1>Aquesta pàgina no existeix</h1>
+      <p class="entradeta pagina404__text">
+        Potser l'adreça té alguna errada o la pàgina ha canviat de lloc.
+        No pateixis: no has fet res malament.
+      </p>
+      <img
+        src="/imatges/marca-connectats.svg"
+        alt=""
+        width="528"
+        height="97"
+        class="pagina404__onada"
+      />
+      <div class="grup-botons pagina404__botons">
+        <a class="boto boto--principal boto--gran" href="/">Torna a l'inici</a>
+        <a class="boto boto--avis boto--gran" href="/he-patit-una-estafa">
+          <Icona nom="alerta" mida={20} /> He patit una estafa
+        </a>
+      </div>
+      <p class="pagina404__mes">
+        També pots anar a <a href="/actualitat">Actualitat</a>,{' '}
+        <a href="/recursos">Recursos</a> o <a href="/contacte">Contacte</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagina404__text { margin-inline: auto; }
+  .pagina404__onada { width: min(100%, 420px); height: auto; opacity: 0.7; margin: 1rem auto 2rem; }
+  .pagina404__botons { justify-content: center; }
+  .pagina404__mes { margin-top: 2rem; color: var(--text-suau); }
+</style>

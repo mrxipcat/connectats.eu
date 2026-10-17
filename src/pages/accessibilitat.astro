@@ -1,0 +1,45 @@
+---
+import PaginaText from '../layouts/PaginaText.astro';
+import { web } from '../lib/web';
+---
+<PaginaText
+  titol="Accessibilitat"
+  descripcio="Compromís d'accessibilitat del lloc web de Connectats i com informar-nos de qualsevol barrera que hi trobis."
+  entradeta="Volem que aquesta web la pugui fer servir tothom. Si hi trobes una barrera, digue'ns-ho."
+  actualitzat="16 d'octubre de 2026"
+  pendent={true}
+>
+  <h2>El nostre compromís</h2>
+  <p>Treballem perquè aquest lloc web compleixi les <strong>Pautes d'accessibilitat per al contingut web (WCAG) 2.1, nivell AA</strong>. Per a nosaltres l'accessibilitat no és un extra: una part important del públic a qui ens adrecem té baixa visió, poca experiència digital o fa servir el lloc des del mòbil en situacions d'estrès.</p>
+
+  <h2>Què hem fet</h2>
+  <ul>
+    <li>Mida de lletra base de 18 píxels i tipografia <i>Atkinson Hyperlegible</i>, dissenyada per a persones amb baixa visió.</li>
+    <li>Contrast de color verificat: tots els textos compleixen com a mínim la relació 4,5:1.</li>
+    <li>Navegació completa amb teclat i indicador de focus sempre visible.</li>
+    <li>Enllaç «Salta al contingut» al principi de cada pàgina.</li>
+    <li>Estructura de títols jeràrquica i HTML semàntic, amb l'atribut <code>lang="ca"</code>.</li>
+    <li>Text alternatiu a totes les imatges informatives; les decoratives s'amaguen als lectors de pantalla.</li>
+    <li>Àrees de clic d'un mínim de 44 × 44 píxels.</li>
+    <li>El disseny suporta l'ampliació del text fins al 200 % sense pèrdua de contingut.</li>
+    <li>Mode fosc automàtic segons la preferència del sistema i respecte per la preferència de moviment reduït.</li>
+    <li>La pàgina «He patit una estafa» està redactada en lectura fàcil: frases curtes i llenguatge planer.</li>
+  </ul>
+
+  <h2>Què sabem que encara podem millorar</h2>
+  <ul>
+    <li>Els documents PDF publicats a Recursos encara no estan tots etiquetats per a lectors de pantalla. <span class="pendent">[PENDENT]</span></li>
+    <li>Els vídeos enllaçats a plataformes externes no sempre tenen subtítols revisats manualment. <span class="pendent">[PENDENT]</span></li>
+    <li>Encara no hem fet una auditoria externa d'accessibilitat. <span class="pendent">[PENDENT]</span></li>
+  </ul>
+
+  <h2>Com informar-nos d'un problema</h2>
+  <p>Si no pots accedir a algun contingut o et trobes amb una dificultat, escriu-nos a <a href={`mailto:${web.correu}`}>{web.correu}</a> indicant la pàgina i què t'ha passat. Mirarem de resoldre-ho i, mentrestant, et farem arribar la informació en un altre format.</p>
+
+  <h2>Declaració</h2>
+  <p>Aquesta declaració es va preparar el <span class="pendent">[PENDENT: data]</span> mitjançant una autoavaluació feta per la mateixa associació.</p>
+</PaginaText>
+
+<style>
+  .pendent { color: var(--avis); font-weight: 700; }
+</style>

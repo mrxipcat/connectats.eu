@@ -1,0 +1,196 @@
+# Configuració del gestor de continguts Pages CMS (https://pagescms.org)
+# Permet publicar alertes, articles, activitats i recursos des d'un panell web,
+# sense tocar codi. Vegeu les instruccions al README.md.
+
+media:
+  input: public/imatges
+  output: /imatges
+
+content:
+  - name: actualitat
+    label: Actualitat (alertes, blog i notícies)
+    type: collection
+    path: src/contingut/actualitat
+    filename: '{fields.data}-{fields.titol}.md'
+    view:
+      fields: [titol, categoria, data]
+      sort: [data, titol]
+      default:
+        sort: data
+        order: desc
+    fields:
+      - name: titol
+        label: Títol
+        type: string
+        required: true
+        description: Curt i clar. A les alertes, comenceu per «Alerta:».
+      - name: data
+        label: Data de publicació
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: categoria
+        label: Categoria
+        type: select
+        required: true
+        options:
+          values:
+            - { value: alertes, label: 'Alertes (avisos ràpids, 100-300 paraules)' }
+            - { value: blog, label: 'Blog (articles, 500-1200 paraules)' }
+            - { value: noticies, label: 'Notícies (activitats, 200-500 paraules)' }
+          default: alertes
+      - name: resum
+        label: Resum
+        type: text
+        required: true
+        description: Màxim 200 caràcters. Surt a les targetes i als cercadors.
+      - name: imatge
+        label: Imatge (opcional)
+        type: image
+      - name: imatge_alt
+        label: Descripció de la imatge
+        type: string
+        description: Obligatori si hi ha imatge. Descriviu què s'hi veu, per a qui no la pot veure.
+      - name: esborrany
+        label: Esborrany (no es publica)
+        type: boolean
+        default: false
+      - name: body
+        label: Text de l'entrada
+        type: rich-text
+
+  - name: agenda
+    label: Agenda d'activitats
+    type: collection
+    path: src/contingut/agenda
+    filename: '{fields.data}-{fields.titol}.md'
+    view:
+      fields: [titol, data, lloc, modalitat]
+    fields:
+      - name: titol
+        label: Títol de l'activitat
+        type: string
+        required: true
+      - name: data
+        label: Data i hora
+        type: date
+        required: true
+        options:
+          time: true
+      - name: lloc
+        label: Lloc
+        type: string
+        required: true
+        description: 'Per exemple: «Biblioteca Central, Girona» o «Videoconferència».'
+      - name: modalitat
+        label: Modalitat
+        type: select
+        required: true
+        options:
+          values: [presencial, 'en línia']
+          default: presencial
+      - name: enllac_inscripcio
+        label: Enllaç d'inscripció (opcional)
+        type: string
+      - name: descripcio
+        label: Descripció breu (opcional)
+        type: text
+
+  - name: recursos
+    label: Recursos i materials
+    type: collection
+    path: src/contingut/recursos
+    filename: '{fields.titol}.md'
+    view:
+      fields: [titol, format, idioma, ordre]
+    fields:
+      - name: titol
+        label: Títol
+        type: string
+        required: true
+      - name: descripcio
+        label: Descripció breu
+        type: text
+        required: true
+      - name: public
+        label: Públic destinatari
+        type: string
+        list: true
+        required: true
+        description: 'Per exemple: Gent gran, Famílies, Centres educatius.'
+      - name: format
+        label: Format
+        type: select
+        required: true
+        options:
+          values: [PDF, vídeo, enllaç]
+          default: PDF
+      - name: idioma
+        label: Idioma
+        type: string
+        default: Català
+      - name: fitxer_o_url
+        label: Fitxer o adreça
+        type: string
+        required: true
+        description: 'Camí del fitxer (per exemple /fitxers/guia.pdf) o adreça completa del vídeo.'
+      - name: ordre
+        label: Ordre a la llista
+        type: number
+        default: 100
+      - name: body
+        label: Notes internes (opcional)
+        type: text
+
+  - name: equip
+    label: Equip
+    type: collection
+    path: src/contingut/equip
+    filename: '{fields.nom}.md'
+    view:
+      fields: [nom, rol, ordre]
+    fields:
+      - name: nom
+        label: Nom i cognom
+        type: string
+        required: true
+      - name: rol
+        label: Rol dins l'associació
+        type: string
+        required: true
+      - name: presentacio
+        label: Línia de presentació
+        type: text
+        required: true
+      - name: foto
+        label: Fotografia
+        type: image
+      - name: ordre
+        label: Ordre
+        type: number
+        default: 100
+
+  - name: collaboradors
+    label: Entitats col·laboradores
+    type: collection
+    path: src/contingut/collaboradors
+    filename: '{fields.nom}.md'
+    view:
+      fields: [nom, url, ordre]
+    fields:
+      - name: nom
+        label: Nom de l'entitat
+        type: string
+        required: true
+      - name: logo
+        label: Logotip
+        type: image
+        required: true
+      - name: url
+        label: Adreça web (opcional)
+        type: string
+      - name: ordre
+        label: Ordre
+        type: number
+        default: 100

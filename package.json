@@ -1,0 +1,24 @@
+{
+  "name": "connectats-eu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web de l'associació Connectats — Digitalment Segurs",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "astro": "^7.4.0",
+    "sharp": "^0.35.5"
+  }
+}

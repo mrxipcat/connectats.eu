@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import LlistaActualitat from '../../components/LlistaActualitat.astro';
+import { entradesDe } from '../../lib/contingut';
+
+const entrades = await entradesDe('alertes');
+---
+<Base titol="Alertes · Actualitat" descripcio="Avisos ràpids sobre estafes i fraus en circulació a Catalunya.">
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol"><a href="/actualitat">Actualitat</a></p>
+      <h1>Alertes</h1>
+      <p class="entradeta">Avisos curts sobre estafes que estan circulant ara mateix. Comparteix-los amb qui ho pugui necessitar.</p>
+      <LlistaActualitat entrades={entrades} categoriaActiva="alertes" pagina={1} baseUrl="/actualitat/alertes" />
+    </div>
+  </section>
+</Base>

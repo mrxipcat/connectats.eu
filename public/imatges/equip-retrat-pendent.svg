@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="Retrat pendent: marcador de posició per a la fotografia d'un membre de l'equip.">
+  <style>
+    .cercle { fill: #D6EAF8; } .silueta { fill: #5BB3F0; }
+    @media (prefers-color-scheme: dark) { .cercle { fill: #153446; } .silueta { fill: #2E96D2; } }
+  </style>
+  <circle class="cercle" cx="160" cy="160" r="160"/>
+  <circle class="silueta" cx="160" cy="128" r="54"/>
+  <path class="silueta" d="M160 196 c -62 0 -102 42 -110 92 a160 160 0 0 0 220 0 c -8 -50 -48 -92 -110 -92 Z"/>
+</svg>

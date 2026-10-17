@@ -1,0 +1,37 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  titol: string;
+  descripcio: string;
+  entradeta?: string;
+  actualitzat?: string;
+  pendent?: boolean;
+}
+const { titol, descripcio, entradeta, actualitzat, pendent = false } = Astro.props;
+---
+<Base titol={titol} descripcio={descripcio}>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor contenidor--estret">
+      <h1>{titol}</h1>
+      {entradeta && <p class="entradeta">{entradeta}</p>}
+      {pendent && (
+        <p class="nota nota--avis">
+          <strong>[PENDENT DE REVISIÓ]</strong> Aquest text és una plantilla genèrica.
+          Cal revisar-lo i adaptar-lo a les dades reals de l'associació abans de publicar-lo,
+          preferiblement amb assessorament jurídic.
+        </p>
+      )}
+      <div class="prosa pagina-text">
+        <slot />
+      </div>
+      {actualitzat && <p class="meta actualitzat">Darrera actualització: {actualitzat}</p>}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagina-text :global(h2) { font-size: var(--t-h3); }
+  .pagina-text :global(h3) { font-size: var(--t-h4); }
+  .actualitzat { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--vora); }
+</style>

@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import Capcalera from '../components/Capcalera.astro';
+import Peu from '../components/Peu.astro';
+import { web } from '../lib/web';
+
+interface Props {
+  titol: string;
+  descripcio: string;
+  imatge?: string;
+  tipus?: 'website' | 'article';
+  dataPublicacio?: Date;
+  senseIndexar?: boolean;
+}
+
+const {
+  titol,
+  descripcio,
+  imatge = '/imatges/og-connectats.jpg',
+  tipus = 'website',
+  dataPublicacio,
+  senseIndexar = false,
+} = Astro.props;
+
+const titolComplet = titol === web.nom ? `${web.nom} — ${web.lema}` : `${titol} | ${web.nom}`;
+const canonica = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site);
+const imatgeAbs = new URL(imatge, Astro.site);
+---
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titolComplet}</title>
+    <meta name="description" content={descripcio} />
+    <link rel="canonical" href={canonica} />
+    {senseIndexar && <meta name="robots" content="noindex, follow" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1A20" media="(prefers-color-scheme: dark)" />
+
+    <link rel="alternate" type="application/rss+xml" title={`Actualitat de ${web.nom}`} href="/rss.xml" />
+
+    <link
+      rel="preload"
+      href="/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content={tipus} />
+    <meta property="og:site_name" content={web.nomLlarg} />
+    <meta property="og:locale" content="ca_ES" />
+    <meta property="og:title" content={titolComplet} />
+    <meta property="og:description" content={descripcio} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={imatgeAbs} />
+    <meta property="og:image:alt" content={`Logotip de ${web.nomLlarg}`} />
+    {dataPublicacio && <meta property="article:published_time" content={dataPublicacio.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'NGO',
+      name: web.nomLlarg,
+      alternateName: web.nom,
+      url: Astro.site?.toString(),
+      logo: new URL('/imatges/logo-connectats.jpg', Astro.site).toString(),
+      email: web.correu,
+      description: web.descripcio,
+      areaServed: 'Catalunya',
+      knowsLanguage: 'ca',
+    })} />
+  </head>
+
+  <body>
+    <a class="salta" href="#contingut">Salta al contingut</a>
+    <Capcalera />
+    <main id="contingut" tabindex="-1">
+      <slot />
+    </main>
+    <Peu />
+  </body>
+</html>

@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import LlistaActualitat from '../../components/LlistaActualitat.astro';
+import { entradesDe } from '../../lib/contingut';
+
+const entrades = await entradesDe('blog');
+---
+<Base titol="Blog · Actualitat" descripcio="Articles divulgatius, consells i bones pràctiques de seguretat digital en català.">
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol"><a href="/actualitat">Actualitat</a></p>
+      <h1>Blog</h1>
+      <p class="entradeta">Articles per entendre com funcionen els enganys i com protegir-se, en llenguatge planer.</p>
+      <LlistaActualitat entrades={entrades} categoriaActiva="blog" pagina={1} baseUrl="/actualitat/blog" />
+    </div>
+  </section>
+</Base>

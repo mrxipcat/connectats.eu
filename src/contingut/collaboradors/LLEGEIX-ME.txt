@@ -1,0 +1,13 @@
+Carpeta d'entitats col·laboradores.
+
+Mentre aquesta carpeta estigui buida, el bloc "Entitats col·laboradores"
+no apareix a la pàgina "Qui som".
+
+Per afegir-ne una, creeu aquí un fitxer .md amb aquest contingut:
+
+---
+nom: "Nom de l'entitat"
+logo: "/imatges/logo-entitat.svg"
+url: "https://www.entitat.cat"
+ordre: 10
+---

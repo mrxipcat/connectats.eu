@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import { recursosOrdenats } from '../lib/contingut';
+
+const recursos = await recursosOrdenats();
+const iconaFormat: Record<string, string> = { PDF: 'pdf', 'vídeo': 'video', 'enllaç': 'enllac' };
+const esExtern = (u: string) => /^https?:\/\//.test(u);
+---
+<Base
+  titol="Recursos"
+  descripcio="Guies, fitxes i vídeos gratuïts en català sobre estafes en línia, contrasenyes, privadesa i seguretat digital."
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <div class="bloc-dues">
+        <div>
+          <p class="sobretitol">Recursos</p>
+          <h1>Materials lliures per fer servir i compartir</h1>
+          <p class="entradeta">
+            Guies curtes, fitxes imprimibles i vídeos en català. Els pots descarregar, imprimir
+            i repartir al teu casal, a la teva aula o a la teva entitat. Són gratuïts.
+          </p>
+        </div>
+        <img
+          src="/imatges/recursos-materials.svg"
+          width="720"
+          height="460"
+          alt="Il·lustració d'un conjunt de guies i materials descarregables: dossiers apilats, un vídeo i una fitxa amb una fletxa de descàrrega."
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="seccio seccio--compacta" aria-labelledby="llista-recursos">
+    <div class="contenidor">
+      <h2 id="llista-recursos" class="nomes-lector">Llista de recursos</h2>
+      {recursos.length > 0 ? (
+        <ul class="graella graella--2 sense-llista">
+          {recursos.map((r) => {
+            const extern = esExtern(r.data.fitxer_o_url);
+            return (
+              <li class="targeta recurs">
+                <p class="recurs__format">
+                  <span class="etiqueta etiqueta--blog">
+                    <Icona nom={iconaFormat[r.data.format] ?? 'enllac'} mida={16} /> {r.data.format}
+                  </span>
+                  <span class="meta">{r.data.idioma}</span>
+                </p>
+                <h3>{r.data.titol}</h3>
+                <p>{r.data.descripcio}</p>
+                <p class="recurs__public">
+                  <span class="bloc-etiqueta">Per a qui és</span>
+                  {r.data.public.map((p) => (<span class="pastilla">{p}</span>))}
+                </p>
+                <p class="recurs__accio">
+                  <a
+                    class="boto boto--principal"
+                    href={r.data.fitxer_o_url}
+                    download={!extern && r.data.format === 'PDF' ? '' : undefined}
+                    rel={extern ? 'noopener noreferrer' : undefined}
+                    target={extern ? '_blank' : undefined}
+                  >
+                    {r.data.format === 'PDF' ? (<><Icona nom="descarrega" mida={18} /> Descarrega el PDF</>) : null}
+                    {r.data.format === 'vídeo' ? (<><Icona nom="video" mida={18} /> Veure el vídeo</>) : null}
+                    {r.data.format === 'enllaç' ? (<><Icona nom="enllac" mida={18} /> Obre el recurs</>) : null}
+                    {extern && <span class="nomes-lector">(s'obre en una finestra nova)</span>}
+                  </a>
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p class="nota">Encara no hi ha recursos publicats.</p>
+      )}
+
+      <p class="nota nota--principal recursos__peu">
+        <strong>Els vídeos s'obren en una plataforma externa.</strong>{' '}
+        No els incrustem aquí per no carregar galetes de tercers al teu navegador.
+        Pots llegir-ne més a la pàgina de <a href="/privadesa">Privadesa i galetes</a>.
+      </p>
+
+      <div class="nota recursos__peu">
+        <p>
+          <strong>Et falta un material concret?</strong> Si prepares una activitat i necessites
+          una fitxa que no tenim, digue'ns-ho: potser la podem fer.
+        </p>
+        <p><a class="boto boto--secundari" href="/contacte">Proposa un recurs <Icona nom="fletxa" mida={18} /></a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bloc-dues { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  @media (min-width: 58rem) { .bloc-dues { grid-template-columns: 1.1fr 1fr; } }
+
+  .recurs__format {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+  .recurs h3 { font-size: var(--t-h4); }
+  .recurs > p:not(.recurs__format):not(.recurs__public):not(.recurs__accio) { flex: 1; }
+  .recurs__public {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0;
+  }
+  .recurs__public .bloc-etiqueta {
+    width: 100%;
+    font-size: var(--t-mini);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-suau);
+    margin-bottom: 0.2rem;
+  }
+  .pastilla {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--fons-suau);
+    border: 1px solid var(--vora);
+    font-size: var(--t-mini);
+  }
+  .recurs__accio { margin: 1.1rem 0 0; }
+  .recursos__peu { margin-top: 2rem; }
+  .recursos__peu > :last-child { margin-bottom: 0; }
+</style>

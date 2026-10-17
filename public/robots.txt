@@ -1,0 +1,5 @@
+# Connectats — Digitalment Segurs
+User-agent: *
+Allow: /
+
+Sitemap: https://connectats.eu/sitemap-index.xml

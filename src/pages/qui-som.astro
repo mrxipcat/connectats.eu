@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import { equipOrdenat, collaboradorsOrdenats } from '../lib/contingut';
+
+const equip = await equipOrdenat();
+const collaboradors = await collaboradorsOrdenats();
+
+const finalitats = [
+  {
+    icona: 'formacio',
+    titol: 'Formar i sensibilitzar',
+    text: 'Promoure la formació i la conscienciació de la ciutadania, especialment dels col·lectius més vulnerables, en l\'ús segur, crític i responsable de les tecnologies digitals.',
+  },
+  {
+    icona: 'escut',
+    titol: 'Prevenir riscos digitals',
+    text: 'Contribuir a prevenir les estafes en línia, el frau, la suplantació d\'identitat, l\'assetjament digital, la desinformació i altres formes d\'abús a l\'entorn digital.',
+  },
+  {
+    icona: 'recursos',
+    titol: 'Difondre bones pràctiques',
+    text: 'Compartir coneixements sobre ciberseguretat, protecció de dades i privadesa amb famílies, escoles, entitats socials i petites organitzacions sense ànim de lucre.',
+  },
+  {
+    icona: 'persones',
+    titol: 'Col·laborar amb el territori',
+    text: 'Treballar amb administracions, centres educatius, cossos de seguretat, universitats i altres entitats en programes i campanyes de conscienciació digital.',
+  },
+  {
+    icona: 'assessorament',
+    titol: 'Crear recursos oberts',
+    text: 'Fomentar la recerca, l\'intercanvi de coneixement i la creació de materials oberts sobre seguretat i alfabetització digital.',
+  },
+  {
+    icona: 'check',
+    titol: 'Reduir la bretxa digital',
+    text: 'Vetllar per la inclusió digital, amb atenció a la diversitat lingüística i cultural del territori.',
+  },
+];
+---
+<Base
+  titol="Qui som"
+  descripcio="Som una associació sense ànim de lucre dedicada a la formació i la sensibilització en seguretat digital, amb atenció especial als col·lectius més vulnerables."
+>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol">Qui som</p>
+      <h1>Dues persones, una idea senzilla i molta feina per fer</h1>
+      <p class="entradeta">
+        Connectats neix de la constatació que la majoria d'estafes digitals no es paren amb tecnologia,
+        sinó amb informació a temps i amb algú a qui preguntar.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccio seccio--compacta" aria-labelledby="missio">
+    <div class="contenidor">
+      <div class="missio">
+        <div class="prosa">
+          <h2 id="missio">La nostra missió</h2>
+          <p>
+            Promovem l'ús segur, crític i responsable de les tecnologies digitals, amb una atenció
+            especial als col·lectius que més ho necessiten: infants, adolescents, persones grans i
+            persones amb necessitats de suport.
+          </p>
+          <p>
+            Ho fem amb tallers, xerrades, assessorament i materials oberts, en un llenguatge planer i
+            sense donar res per sabut. Creiem que la seguretat digital no és un tema d'experts: és una
+            competència bàsica, com travessar un carrer.
+          </p>
+          <p>
+            No venem productes ni serveis de seguretat. Som una entitat sense ànim de lucre i els
+            nostres materials són gratuïts.
+          </p>
+        </div>
+        <img
+          src="/imatges/que-fem-taller.svg"
+          width="800"
+          height="520"
+          alt="Il·lustració d'un taller: una persona fa una xerrada davant d'una pantalla amb un escut de seguretat mentre quatre persones assegudes l'escolten."
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="seccio seccio--suau" aria-labelledby="finalitats">
+    <div class="contenidor">
+      <p class="sobretitol">Finalitats</p>
+      <h2 id="finalitats" class="titol-seccio">A què ens comprometem</h2>
+      <p class="entradeta">Les finalitats dels nostres estatuts, explicades en llenguatge planer.</p>
+      <ul class="graella graella--3 sense-llista">
+        {finalitats.map((f) => (
+          <li class="targeta finalitat">
+            <span class="finalitat__icona" aria-hidden="true"><Icona nom={f.icona} mida={26} /></span>
+            <h3>{f.titol}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="nota nota--principal finalitats__nota">
+        Pots consultar els estatuts complets a la pàgina de{' '}
+        <a href="/transparencia">Transparència</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccio" aria-labelledby="equip">
+    <div class="contenidor">
+      <p class="sobretitol">L'equip</p>
+      <h2 id="equip" class="titol-seccio">Qui hi ha al darrere</h2>
+      <p class="entradeta">
+        Som un equip petit. Si ens escrius, et respondrà una de nosaltres dues.
+      </p>
+      <ul class="graella graella--2 sense-llista equip">
+        {equip.map((p) => (
+          <li class="targeta equip__fitxa">
+            <img
+              src={p.data.foto ?? '/imatges/equip-retrat-pendent.svg'}
+              alt={`Retrat de ${p.data.nom}`}
+              width="320"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <h3>{p.data.nom}</h3>
+              <p class="equip__rol">{p.data.rol}</p>
+              <p>{p.data.presentacio}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {collaboradors.length > 0 && (
+    <section class="seccio seccio--suau" aria-labelledby="collaboradors">
+      <div class="contenidor">
+        <p class="sobretitol">Xarxa</p>
+        <h2 id="collaboradors" class="titol-seccio">Entitats col·laboradores</h2>
+        <ul class="graella graella--4 sense-llista logos">
+          {collaboradors.map((c) => (
+            <li class="logos__element">
+              {c.data.url ? (
+                <a href={c.data.url} rel="noopener noreferrer" target="_blank">
+                  <img src={c.data.logo} alt={`Logotip de ${c.data.nom}`} loading="lazy" decoding="async" width="200" height="90" />
+                  <span class="nomes-lector">{c.data.nom} (s'obre en una finestra nova)</span>
+                </a>
+              ) : (
+                <img src={c.data.logo} alt={`Logotip de ${c.data.nom}`} loading="lazy" decoding="async" width="200" height="90" />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <div class="nota nota--principal crida">
+        <p><strong>Vols col·laborar amb nosaltres?</strong> Busquem entitats, centres i persones voluntàries que vulguin portar la seguretat digital al seu entorn.</p>
+        <a class="boto boto--principal" href="/contacte?motiu=collaboracio">Parlem-ne <Icona nom="fletxa" mida={18} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .missio { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  @media (min-width: 58rem) { .missio { grid-template-columns: 1.1fr 1fr; } }
+
+  .finalitat__icona {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--principal-suau);
+    color: var(--principal);
+    margin-bottom: 0.9rem;
+  }
+  .finalitat h3 { font-size: var(--t-h4); }
+  .finalitats__nota { margin-top: 2rem; }
+
+  .equip__fitxa { flex-direction: row; gap: 1.25rem; align-items: start; }
+  .equip__fitxa img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    flex: none;
+    object-fit: cover;
+    background: var(--principal-suau);
+  }
+  .equip__rol {
+    color: var(--principal);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .equip__fitxa h3 { margin-bottom: 0.15rem; font-size: var(--t-h4); }
+
+  .logos__element {
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    background: var(--fons-targeta);
+    border: 1px solid var(--vora);
+    border-radius: var(--radi-m);
+    min-height: 110px;
+  }
+
+  .crida {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  .crida p { margin: 0; max-width: 62ch; }
+</style>

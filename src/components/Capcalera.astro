@@ -1,0 +1,197 @@
+---
+import { menu, web } from '../lib/web';
+import Icona from './Icona.astro';
+
+const ruta = Astro.url.pathname.replace(/\/$/, '') || '/';
+const esActiu = (url: string) => ruta === url || ruta.startsWith(url + '/');
+---
+<header class="capcalera">
+  <div class="capcalera__interior contenidor">
+    <a class="marca" href="/">
+      <img src="/imatges/logo-connectats.svg" width="528" height="237" alt={`${web.nom} — ${web.lema}`} class="marca__logo" />
+      <span class="nomes-lector">— Inici</span>
+    </a>
+
+    <a class="boto boto--avis capcalera__sos" href="/he-patit-una-estafa">
+      <Icona nom="alerta" mida={22} />
+      <span>He patit una estafa</span>
+    </a>
+
+    <button
+      type="button"
+      class="menu-boto"
+      id="menu-boto"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      hidden
+    >
+      <Icona nom="menu" mida={26} class="menu-boto__obre" />
+      <Icona nom="tanca" mida={26} class="menu-boto__tanca" />
+      <span class="menu-boto__text">Menú</span>
+    </button>
+
+    <nav class="navegacio" id="menu-principal" aria-label="Menú principal">
+      <ul class="navegacio__llista">
+        {menu.map((item) => (
+          <li>
+            <a href={item.url} aria-current={esActiu(item.url) ? 'page' : undefined}>{item.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Millora progressiva: sense JavaScript el menú es mostra sempre desplegat.
+  (function () {
+    var boto = document.getElementById('menu-boto');
+    var nav = document.getElementById('menu-principal');
+    if (!boto || !nav) return;
+    boto.hidden = false;
+    nav.dataset.plegable = 'si';
+    var tanca = function () {
+      boto.setAttribute('aria-expanded', 'false');
+      nav.dataset.obert = 'no';
+    };
+    tanca();
+    boto.addEventListener('click', function () {
+      var obert = boto.getAttribute('aria-expanded') === 'true';
+      boto.setAttribute('aria-expanded', String(!obert));
+      nav.dataset.obert = obert ? 'no' : 'si';
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target instanceof HTMLAnchorElement) tanca();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && boto.getAttribute('aria-expanded') === 'true') {
+        tanca();
+        boto.focus();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .capcalera {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--fons) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--vora);
+  }
+
+  .capcalera__interior {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'marca menu'
+      'sos   sos'
+      'nav   nav';
+    align-items: center;
+    gap: 0.6rem 1rem;
+    padding-block: 0.6rem;
+  }
+
+  /* --- Marca --- */
+  .marca {
+    grid-area: marca;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--text);
+    min-height: 48px;
+    padding: 0.2rem 0.3rem 0.2rem 0;
+    border-radius: var(--radi-s);
+  }
+  /* Logotip original (Connectats_v4.svg): no se'n canvien proporcions ni colors */
+  .marca__logo { height: 56px; width: auto; flex: none; }
+
+  /* --- Botó «He patit una estafa»: sempre visible, també a mòbil --- */
+  .capcalera__sos {
+    grid-area: sos;
+    width: 100%;
+    padding-inline: 1.1rem;
+    font-size: var(--t-petit);
+  }
+
+  .menu-boto {
+    grid-area: menu;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    min-width: 50px;
+    min-height: 50px;
+    padding: 0.3rem 0.5rem;
+    background: transparent;
+    border: 2px solid var(--vora-forta);
+    border-radius: var(--radi-m);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .menu-boto:hover { background: var(--fons-suau); }
+  .menu-boto__text { letter-spacing: 0.04em; }
+  .menu-boto :global(.menu-boto__tanca) { display: none; }
+  .menu-boto[aria-expanded='true'] :global(.menu-boto__obre) { display: none; }
+  .menu-boto[aria-expanded='true'] :global(.menu-boto__tanca) { display: block; }
+
+  /* --- Navegació --- */
+  .navegacio { grid-area: nav; }
+  .navegacio__llista {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.4rem;
+    margin: 0;
+    padding: 0.35rem 0 0.2rem;
+  }
+  .navegacio__llista a {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radi-s);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .navegacio__llista a:hover {
+    background: var(--principal-suau);
+    color: var(--principal-fort);
+  }
+  .navegacio__llista a[aria-current='page'] {
+    color: var(--principal);
+    box-shadow: inset 0 -3px 0 var(--principal);
+    border-radius: var(--radi-s) var(--radi-s) 0 0;
+  }
+
+  /* Plegat a mòbil (només quan hi ha JavaScript) */
+  .navegacio[data-plegable='si'][data-obert='no'] { display: none; }
+
+  @media (min-width: 62rem) {
+    .capcalera__interior {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas: 'marca nav sos';
+      gap: 0.5rem 1.5rem;
+      padding-block: 0.85rem;
+    }
+    .marca__logo { height: 66px; }
+    .navegacio { justify-self: end; }
+    .navegacio__llista { padding: 0; flex-wrap: nowrap; }
+    .menu-boto { display: none !important; }
+    .navegacio[data-plegable='si'][data-obert='no'] { display: block; }
+    .capcalera__sos { width: auto; padding-inline: 1.3rem; }
+  }
+
+  @media (max-width: 23rem) {
+    .marca__logo { height: 48px; }
+  }
+</style>

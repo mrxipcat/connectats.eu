@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import Icona from '../components/Icona.astro';
+import BlocAlerta from '../components/BlocAlerta.astro';
+import TargetaEntrada from '../components/TargetaEntrada.astro';
+import { alertaVigent, entradesPublicades } from '../lib/contingut';
+import { web } from '../lib/web';
+
+const alerta = await alertaVigent();
+const darreres = (await entradesPublicades()).slice(0, 3);
+
+const oferim = [
+  {
+    icona: 'formacio',
+    titol: 'Formació',
+    text: 'Tallers i xerrades a centres educatius, entitats, casals i empreses petites. Presencials o en línia, adaptats a cada públic.',
+    enllac: '/que-fem#tallers',
+    enllacText: 'Veure els tallers',
+    color: 'blau',
+  },
+  {
+    icona: 'assessorament',
+    titol: 'Assessorament',
+    text: 'Acompanyem persones i entitats que han patit una estafa o que volen prevenir incidents de seguretat. Escoltem primer.',
+    enllac: '/que-fem#assessorament',
+    enllacText: 'Com t\'acompanyem',
+    color: 'verd',
+  },
+  {
+    icona: 'recursos',
+    titol: 'Recursos',
+    text: 'Guies, fitxes i vídeos en català, lliures i gratuïts, per fer servir a casa, a l\'aula o a la teva entitat.',
+    enllac: '/recursos',
+    enllacText: 'Veure els recursos',
+    color: 'blau',
+  },
+];
+---
+<Base
+  titol={web.nom}
+  descripcio={web.descripcio}
+>
+  <!-- Capçalera principal -->
+  <section class="hero">
+    <div class="contenidor hero__interior">
+      <div class="hero__text">
+        <p class="sobretitol">Associació sense ànim de lucre</p>
+        <h1>Que ningú no es quedi sol davant d'una estafa digital</h1>
+        <p class="hero__entradeta">
+          Som una entitat que forma, acompanya i informa sobre els riscos d'internet.
+          Treballem perquè infants, joves, gent gran i persones amb necessitats de suport
+          puguin fer servir la tecnologia amb confiança i sàpiguen com defensar-se.
+        </p>
+        <div class="grup-botons">
+          <a class="boto boto--principal boto--gran" href="/que-fem">
+            Què fem <Icona nom="fletxa" mida={20} />
+          </a>
+          <a class="boto boto--avis boto--gran" href="/he-patit-una-estafa">
+            <Icona nom="alerta" mida={20} /> He patit una estafa
+          </a>
+        </div>
+      </div>
+      <img
+        class="hero__imatge"
+        src="/imatges/inici-persones-connectades.svg"
+        width="800"
+        height="560"
+        alt="Il·lustració de tres persones de diferents edats —una persona gran, una adulta i una criatura— utilitzant el mòbil i la tauleta amb tranquil·litat."
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <!-- Darrera alerta -->
+  {alerta && (
+    <section class="seccio seccio--compacta" aria-labelledby="titol-alerta">
+      <div class="contenidor">
+        <h2 id="titol-alerta" class="nomes-lector">Darrera alerta</h2>
+        <BlocAlerta entrada={alerta} />
+      </div>
+    </section>
+  )}
+
+  <!-- Què oferim -->
+  <section class="seccio seccio--suau" aria-labelledby="titol-oferim">
+    <div class="contenidor">
+      <p class="sobretitol">Què oferim</p>
+      <h2 id="titol-oferim" class="titol-seccio">Tres maneres d'ajudar-te</h2>
+      <p class="entradeta">
+        Treballem amb particulars, famílies, centres educatius, entitats socials i petites organitzacions.
+      </p>
+      <ul class="graella graella--3 sense-llista">
+        {oferim.map((o) => (
+          <li class="targeta targeta--enllacable enllac-targeta oferta">
+            <span class:list={['oferta__icona', `oferta__icona--${o.color}`]} aria-hidden="true">
+              <Icona nom={o.icona} mida={30} />
+            </span>
+            <h3>{o.titol}</h3>
+            <p>{o.text}</p>
+            <p class="oferta__enllac">
+              <a href={o.enllac}>{o.enllacText} <Icona nom="fletxa" mida={18} /></a>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Darreres entrades -->
+  <section class="seccio" aria-labelledby="titol-actualitat">
+    <div class="contenidor">
+      <div class="capcalera-seccio">
+        <div>
+          <p class="sobretitol">Actualitat</p>
+          <h2 id="titol-actualitat" class="titol-seccio">Alertes, articles i notícies</h2>
+        </div>
+        <a class="boto boto--secundari" href="/actualitat">
+          Totes les entrades <Icona nom="fletxa" mida={18} />
+        </a>
+      </div>
+      {darreres.length > 0 ? (
+        <ul class="graella graella--3 sense-llista">
+          {darreres.map((e) => (<li><TargetaEntrada entrada={e} /></li>))}
+        </ul>
+      ) : (
+        <p>Encara no hi ha entrades publicades.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Contacte ràpid -->
+  <section class="seccio seccio--compacta" aria-labelledby="titol-contacte">
+    <div class="contenidor">
+      <div class="contacte-rapid">
+        <div>
+          <h2 id="titol-contacte">Tens un dubte o vols organitzar una formació?</h2>
+          <p>
+            Escriu-nos i et responem. No cal que sàpigues explicar-ho amb paraules tècniques:
+            ja ho endreçarem junts.
+          </p>
+        </div>
+        <div class="grup-botons">
+          <a class="boto boto--principal boto--gran" href="/contacte">
+            <Icona nom="correu" mida={20} /> Contacta amb nosaltres
+          </a>
+          <a class="boto boto--secundari boto--gran" href="/contacte?motiu=formacio">
+            Demana una formació
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+    background:
+      radial-gradient(60rem 30rem at 15% -10%, var(--principal-suau), transparent 70%),
+      radial-gradient(45rem 28rem at 95% 10%, var(--accent-suau), transparent 70%);
+  }
+  .hero__interior {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: var(--t-hero);
+    max-width: 16ch;
+  }
+  .hero__entradeta {
+    font-size: var(--t-gran);
+    color: var(--text-suau);
+    max-width: 52ch;
+    margin-bottom: 1.8rem;
+  }
+  .hero__imatge { width: 100%; height: auto; }
+  @media (min-width: 60rem) {
+    .hero__interior { grid-template-columns: 1.05fr 1fr; }
+    .hero__imatge { order: 2; }
+  }
+
+  .capcalera-seccio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .capcalera-seccio h2 { margin-bottom: 0; }
+
+  .oferta__icona {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    margin-bottom: 1rem;
+  }
+  .oferta__icona--blau { background: var(--principal-suau); color: var(--principal); }
+  .oferta__icona--verd { background: var(--accent-suau); color: var(--accent); }
+  .oferta p:not(.oferta__enllac) { flex: 1; }
+  .oferta__enllac { margin: 0.6rem 0 0; }
+  .oferta__enllac a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .oferta__enllac a:hover { text-decoration: underline; }
+
+  .contacte-rapid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid var(--principal-vora);
+    border-radius: var(--radi-xl);
+    background: var(--principal-suau);
+  }
+  .contacte-rapid h2 { font-size: var(--t-h3); }
+  .contacte-rapid p { margin-bottom: 0; max-width: 56ch; }
+  @media (min-width: 52rem) {
+    .contacte-rapid { grid-template-columns: 1.4fr auto; }
+  }
+</style>

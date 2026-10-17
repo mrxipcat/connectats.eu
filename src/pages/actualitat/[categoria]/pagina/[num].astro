@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../../layouts/Base.astro';
+import LlistaActualitat from '../../../../components/LlistaActualitat.astro';
+import { entradesDe } from '../../../../lib/contingut';
+import { ENTRADES_PER_PAGINA, categories } from '../../../../lib/web';
+
+export const getStaticPaths = (async () => {
+  const claus = ['alertes', 'blog', 'noticies'] as const;
+  const camins = [];
+  for (const clau of claus) {
+    const entrades = await entradesDe(clau);
+    const pagines = Math.ceil(entrades.length / ENTRADES_PER_PAGINA);
+    for (let n = 2; n <= pagines; n++) {
+      camins.push({ params: { categoria: clau, num: String(n) }, props: { entrades, pagina: n, clau } });
+    }
+  }
+  return camins;
+}) satisfies GetStaticPaths;
+
+const { entrades, pagina, clau } = Astro.props;
+const cat = categories[clau];
+---
+<Base titol={`${cat.plural} — pàgina ${pagina}`} descripcio={`${cat.plural} de l'associació Connectats.`} senseIndexar={true}>
+  <section class="seccio seccio--compacta">
+    <div class="contenidor">
+      <p class="sobretitol"><a href="/actualitat">Actualitat</a></p>
+      <h1>{cat.plural}</h1>
+      <p class="entradeta">Pàgina {pagina}</p>
+      <LlistaActualitat entrades={entrades} categoriaActiva={clau} pagina={pagina} baseUrl={cat.url} />
+    </div>
+  </section>
+</Base>
