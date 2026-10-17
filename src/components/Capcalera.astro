@@ -8,7 +8,10 @@ const esActiu = (url: string) => ruta === url || ruta.startsWith(url + '/');
 <header class="capcalera">
   <div class="capcalera__interior contenidor">
     <a class="marca" href="/">
-      <img src="/imatges/logo-connectats.svg" width="528" height="237" alt={`${web.nom} — ${web.lema}`} class="marca__logo" />
+      <picture>
+        <source srcset="/imatges/logo-connectats-fosc.svg" media="(prefers-color-scheme: dark)" />
+        <img src="/imatges/logo-connectats.svg" width="528" height="237" alt={`${web.nom} — ${web.lema}`} class="marca__logo" />
+      </picture>
       <span class="nomes-lector">— Inici</span>
     </a>
 
@@ -107,7 +110,8 @@ const esActiu = (url: string) => ruta === url || ruta.startsWith(url + '/');
     padding: 0.2rem 0.3rem 0.2rem 0;
     border-radius: var(--radi-s);
   }
-  /* Logotip original (Connectats_v4.svg): no se'n canvien proporcions ni colors */
+  /* Logotip original (Connectats_v4.svg; en mode fosc, Connectats_v4_B.svg): no se'n canvien proporcions ni colors */
+  .marca picture { display: contents; }
   .marca__logo { height: 56px; width: auto; flex: none; }
 
   /* --- Botó «He patit una estafa»: sempre visible, també a mòbil --- */

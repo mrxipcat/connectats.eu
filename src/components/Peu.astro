@@ -7,7 +7,10 @@ const any = new Date().getFullYear();
   <div class="contenidor peu__interior">
     <div class="peu__bloc peu__bloc--marca">
       <a class="peu__marca" href="/">
-        <img src="/imatges/logo-connectats.svg" alt={`${web.nom} — ${web.lema}`} width="528" height="237" />
+        <picture>
+          <source srcset="/imatges/logo-connectats-fosc.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/imatges/logo-connectats.svg" alt={`${web.nom} — ${web.lema}`} width="528" height="237" />
+        </picture>
       </a>
       <p class="peu__descripcio">{web.descripcio}</p>
       <p class="peu__registre">Entitat sense ànim de lucre. {web.registre} <span class="pendent">[PENDENT]</span></p>
