@@ -10,8 +10,8 @@ de qui visita la web.
 |---|---|---|
 | `inici-persones-connectades.svg` | Portada (capçalera principal) | Persones de diferents edats fent servir el mòbil o l'ordinador **amb tranquil·litat**. Mai una imatge alarmista ni d'estètica «hacker». |
 | `que-fem-taller.svg` | «Què fem» i «Qui som» | Un taller o una xerrada en grup, amb gent atenta i un ambient proper. |
-| `estafa-acompanyament.svg` | «He patit una estafa» i «Què fem» | Imatge serena: dues persones conversant, unes mans amb un mòbil, un ambient calmat. **Mai** una imatge que generi por. |
-| `recursos-materials.svg` | «Recursos» | Materials impresos, fitxes o guies damunt d'una taula. |
+| `estafa-acompanyament.svg` | «He patit una estafa» | Imatge serena: dues persones conversant, unes mans amb un mòbil, un ambient calmat. **Mai** una imatge que generi por. |
+| `recursos-materials.svg` | «Recursos» i «Què fem» | Materials impresos, fitxes o guies damunt d'una taula. |
 | `equip-retrat-pendent.svg` | «Qui som» | Retrats reals de les persones de l'equip, quadrats i de 600 × 600 px com a mínim. |
 | `logo-connectats.svg` | Capçalera i peu | Logotip complet. Es genera amb `node eines/logo.mjs` a partir de `Connectats_v4.svg`. |
 | `marca-connectats.svg` | Pàgina 404 | Onada del logotip, exacta. Es genera amb `node eines/logo.mjs`. |

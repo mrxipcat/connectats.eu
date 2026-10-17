@@ -7,7 +7,7 @@ export const web = {
   lema: 'Digitalment Segurs',
   nomLlarg: 'Connectats Digitalment Segurs Associació',
   descripcio:
-    'Formació, assessorament i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
+    'Formació, conscienciació i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
   correu: 'info@connectats.eu',
   telefon: '', // [PENDENT] opcional
   adreca: '', // [PENDENT] opcional
@@ -41,7 +41,6 @@ export const categories = {
 
 export const motiusContacte = [
   { valor: 'formacio', text: 'Demanar una formació' },
-  { valor: 'estafa', text: 'He patit una estafa' },
   { valor: 'collaboracio', text: 'Col·laboració' },
   { valor: 'altres', text: 'Altres' },
 ] as const;

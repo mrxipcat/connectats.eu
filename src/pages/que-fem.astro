@@ -26,19 +26,19 @@ const publics = [
 ---
 <Base
   titol="Què fem"
-  descripcio="Tallers i xerrades de seguretat digital, assessorament a persones i entitats, i agenda d'activitats obertes."
+  descripcio="Tallers i xerrades de seguretat digital, conscienciació i divulgació, i agenda d'activitats obertes."
 >
   <section class="seccio seccio--compacta">
     <div class="contenidor">
       <p class="sobretitol">Què fem</p>
-      <h1>Formació, acompanyament i activitats obertes</h1>
+      <h1>Formació, conscienciació i divulgació</h1>
       <p class="entradeta">
         Portem la seguretat digital allà on hi ha les persones: escoles, casals, biblioteques,
         entitats i petites organitzacions. En català, en llenguatge planer i sense tecnicismes.
       </p>
       <nav class="indexs" aria-label="Seccions d'aquesta pàgina">
         <a href="#tallers">Tallers i xerrades</a>
-        <a href="#assessorament">Assessorament</a>
+        <a href="#divulgacio">Conscienciació i divulgació</a>
         <a href="#agenda">Agenda</a>
       </nav>
     </div>
@@ -86,38 +86,37 @@ const publics = [
     </div>
   </section>
 
-  <!-- Assessorament -->
-  <section class="seccio seccio--suau" id="assessorament" aria-labelledby="titol-assessorament">
+  <!-- Conscienciació i divulgació -->
+  <section class="seccio seccio--suau" id="divulgacio" aria-labelledby="titol-divulgacio">
     <div class="contenidor">
       <div class="bloc-dues bloc-dues--invers">
         <div class="prosa">
-          <p class="sobretitol">02 — Acompanyament</p>
-          <h2 id="titol-assessorament">Assessorament a persones i entitats</h2>
+          <p class="sobretitol">02 — Conscienciació</p>
+          <h2 id="titol-divulgacio">Conscienciació i divulgació</h2>
           <p>
-            Si has patit una estafa o un incident de seguretat, t'ajudem a entendre què ha passat,
-            quins passos has de fer ara i com evitar que torni a passar. Escoltem primer i no jutgem:
-            caure en una estafa no vol dir ser ingenu, vol dir haver trobat un engany ben fet.
+            La millor defensa contra una estafa és saber que existeix abans que arribi. Per això
+            publiquem alertes sobre els enganys que circulen, articles en llenguatge planer i
+            campanyes de sensibilització amb escoles, biblioteques, casals i entitats del territori.
           </p>
           <p>
-            A les entitats i petites organitzacions les acompanyem a fer una revisió bàsica: comptes
-            compartits, còpies de seguretat, protecció de dades de les persones sòcies i protocol
-            davant d'un incident.
+            Tots els nostres materials són oberts i gratuïts: guies, fitxes i vídeos que pots fer
+            servir a casa, a l'aula o a la teva entitat. Caure en una estafa no vol dir ser ingenu,
+            vol dir haver trobat un engany ben fet; per això en parlem sense jutjar ningú.
           </p>
-          <p class="nota nota--avis">
-            <strong>Important:</strong> oferim orientació i acompanyament, però no substituïm els
-            serveis d'emergència, la policia ni l'assessorament jurídic.
-          </p>
-          <p>
-            <a class="boto boto--avis" href="/he-patit-una-estafa">
-              <Icona nom="alerta" mida={20} /> Acabo de patir una estafa
+          <p class="grup-botons">
+            <a class="boto boto--principal" href="/actualitat/alertes">
+              Alertes recents <Icona nom="fletxa" mida={20} />
+            </a>
+            <a class="boto boto--secundari" href="/recursos">
+              Recursos oberts <Icona nom="fletxa" mida={20} />
             </a>
           </p>
         </div>
         <img
-          src="/imatges/estafa-acompanyament.svg"
-          width="760"
-          height="520"
-          alt="Il·lustració serena de dues persones assegudes una davant de l'altra: una escolta amb atenció mentre l'altra ensenya el mòbil."
+          src="/imatges/recursos-materials.svg"
+          width="720"
+          height="460"
+          alt="Il·lustració d'un conjunt de guies i materials descarregables: dossiers apilats, un vídeo i una fitxa amb una fletxa de descàrrega."
           loading="lazy"
           decoding="async"
         />

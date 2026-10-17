@@ -98,7 +98,7 @@ Una sola pàgina amb aquests blocs:
 Una sola pàgina amb tres blocs, cadascun amb àncora pròpia:
 
 - `#tallers`: **Tallers i xerrades.** Temes que es treballen (estafes en línia, contrasenyes i autenticació, privadesa a les xarxes, protecció de dades, ús segur del mòbil, desinformació, ciberassetjament) i públics als quals s'adrecen (centres educatius, famílies, gent gran, entitats socials, petites organitzacions). Modalitat presencial o en línia.
-- `#assessorament`: **Assessorament.** Acompanyament a persones i entitats que han patit o volen prevenir estafes i incidents de seguretat.
+- `#divulgacio`: **Conscienciació i divulgació.** Alertes, articles, campanyes de sensibilització i materials oberts. L'associació no ofereix servei d'acompanyament ni atén casos particulars.
 - `#agenda`: **Agenda.** Llista de properes activitats (data, títol, lloc, modalitat, enllaç d'inscripció opcional). Si no hi ha activitats futures, mostra el missatge: "Ara mateix no hi ha activitats programades. Vols organitzar-ne una? Contacta'ns."
 
 Al final, un botó destacat **"Demana una formació"** que porta a `/contacte?motiu=formacio` amb el motiu ja seleccionat al formulari.
@@ -143,13 +143,13 @@ Crea 2 entrades de mostra per categoria, marcades com a `[PENDENT]`.
    - El teu banc (telèfon que figura a la targeta o a l'aplicació).
    - Autoritat Catalana de Protecció de Dades (APDCAT), per a vulneracions de dades personals.
    - Verifica i actualitza aquestes dades abans de publicar `[PENDENT]`.
-5. **Contacta amb nosaltres:** botó cap a `/contacte?motiu=estafa`.
+5. **Encara tens dubtes?:** remet a la Línia d'ajuda en ciberseguretat de l'INCIBE (017).
 
-Afegeix un avís: "Aquesta associació ofereix orientació i acompanyament, però no substitueix els serveis d'emergència, la policia ni l'assessorament jurídic."
+Afegeix un avís: "Aquesta associació es dedica a la formació, la conscienciació i la divulgació. No atenem casos particulars ni substituïm els serveis d'emergència, la policia ni l'assessorament jurídic."
 
 ### 6. Contacte
 
-- Formulari amb: nom, correu electrònic, telèfon (opcional), motiu (desplegable: Demanar una formació · He patit una estafa · Col·laboració · Altres), missatge i casella obligatòria d'acceptació de la política de privadesa.
+- Formulari amb: nom, correu electrònic, telèfon (opcional), motiu (desplegable: Demanar una formació · Col·laboració · Altres), missatge i casella obligatòria d'acceptació de la política de privadesa.
 - El motiu es preselecciona amb el paràmetre `?motiu=` de la URL.
 - Avís visible sobre el formulari: **"No ens enviïs mai contrasenyes, codis de verificació ni dades bancàries per aquest formulari ni per cap altre mitjà."**
 - Correu electrònic de contacte i enllaços a xarxes socials `[PENDENT]`.

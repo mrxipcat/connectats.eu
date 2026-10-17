@@ -15,7 +15,6 @@ import nodemailer from 'nodemailer';
 
 const MOTIUS = {
   formacio: 'Demanar una formació',
-  estafa: 'He patit una estafa',
   collaboracio: 'Col·laboració',
   altres: 'Altres',
 };
