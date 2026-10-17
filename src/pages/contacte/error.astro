@@ -18,6 +18,19 @@ import { web } from '../../lib/web';
         Torna-ho a provar des del <a href="/contacte">formulari de contacte</a> o, si
         ho prefereixes, escriu-nos directament a <a href={`mailto:${web.correu}`}>{web.correu}</a>.
       </p>
+      <p class="meta" id="codi-error" hidden>
+        Si ens ho comuniques, indica'ns aquest codi: <code></code>
+      </p>
     </div>
   </section>
 </Base>
+
+<script>
+  // Mostra la causa que indica la funció (?causa=...), per ajudar a diagnosticar.
+  const causa = new URLSearchParams(window.location.search).get('causa');
+  const bloc = document.getElementById('codi-error');
+  if (causa && /^[a-z]{1,20}$/.test(causa) && bloc) {
+    bloc.querySelector('code')!.textContent = causa;
+    bloc.hidden = false;
+  }
+</script>

@@ -25,6 +25,10 @@ const PAGINA_ERROR = '/contacte/error/';
 
 const redirigeix = (desti) => ({ status: 303, headers: { Location: desti } });
 
+// La causa viatja a l'adreça de la pàgina d'error (?causa=...) per poder
+// diagnosticar sense haver de consultar els registres d'Azure.
+const error = (causa) => redirigeix(`${PAGINA_ERROR}?causa=${causa}`);
+
 /** Treu espais dels extrems i salts de línia, i talla a una llargada màxima. */
 const net = (valor, maxim) =>
   String(valor ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0, maxim);
@@ -53,7 +57,8 @@ function obteTransport() {
     host: process.env.SMTP_SERVIDOR || 'smtp.gmail.com',
     port: Number(process.env.SMTP_PORT || 465),
     secure: Number(process.env.SMTP_PORT || 465) === 465,
-    auth: { user: process.env.SMTP_USUARI, pass: process.env.SMTP_CONTRASENYA },
+    // Google mostra la contrasenya d'aplicació amb espais; els traiem per si s'han copiat.
+    auth: { user: process.env.SMTP_USUARI?.trim(), pass: process.env.SMTP_CONTRASENYA?.replace(/\s+/g, '') },
   });
   return transport;
 }
@@ -63,17 +68,17 @@ export async function contacte(request, context) {
   try {
     dades = await request.formData();
   } catch {
-    return redirigeix(PAGINA_ERROR);
+    return error('dades');
   }
 
   const camps = validaFormulari(dades);
   if (camps?.robot) return redirigeix(PAGINA_ENVIAT);
-  if (!camps) return redirigeix(PAGINA_ERROR);
+  if (!camps) return error('dades');
 
-  const remitent = process.env.SMTP_USUARI;
+  const remitent = process.env.SMTP_USUARI?.trim();
   if (!remitent || !process.env.SMTP_CONTRASENYA) {
     context.error('Falten les variables SMTP_USUARI o SMTP_CONTRASENYA.');
-    return redirigeix(PAGINA_ERROR);
+    return error('configuracio');
   }
 
   const motiu = MOTIUS[camps.motiu];
@@ -96,9 +101,10 @@ export async function contacte(request, context) {
         'Per respondre, contesta aquest correu directament.',
       ].join('\n'),
     });
-  } catch (error) {
-    context.error("No s'ha pogut enviar el correu:", error?.message);
-    return redirigeix(PAGINA_ERROR);
+  } catch (err) {
+    context.error("No s'ha pogut enviar el correu:", err?.message);
+    // EAUTH: el servidor ha rebutjat l'usuari o la contrasenya.
+    return error(err?.code === 'EAUTH' ? 'autenticacio' : 'enviament');
   }
 
   return redirigeix(PAGINA_ENVIAT);
