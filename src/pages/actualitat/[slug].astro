@@ -5,7 +5,7 @@ import Base from '../../layouts/Base.astro';
 import Icona from '../../components/Icona.astro';
 import TargetaEntrada from '../../components/TargetaEntrada.astro';
 import { entradesPublicades, relacionades } from '../../lib/contingut';
-import { categories, formataData, dataISO, web } from '../../lib/web';
+import { categories, formataData, dataISO, web, urlCanonica, IMATGE_PER_DEFECTE } from '../../lib/web';
 
 export const getStaticPaths = (async () => {
   const entrades = await entradesPublicades();
@@ -18,7 +18,38 @@ const cat = categories[entrada.data.categoria];
 const esAlerta = entrada.data.categoria === 'alertes';
 const altres = await relacionades(entrada);
 
-const url = new URL(`/actualitat/${entrada.id}`, Astro.site).toString();
+const url = urlCanonica(`/actualitat/${entrada.id}`, Astro.site).toString();
+const lloc = new URL('/', Astro.site).toString();
+const absoluta = (ruta: string) => urlCanonica(ruta, Astro.site).toString();
+
+// Dades estructurades: l'article i la ruta de navegació (molla de pa).
+const esquema = [
+  {
+    '@type': entrada.data.categoria === 'blog' ? 'BlogPosting' : 'NewsArticle',
+    '@id': `${url}#article`,
+    headline: entrada.data.titol,
+    description: entrada.data.resum,
+    datePublished: entrada.data.data.toISOString(),
+    dateModified: entrada.data.data.toISOString(),
+    inLanguage: 'ca',
+    articleSection: cat.plural,
+    image: new URL(entrada.data.imatge ?? IMATGE_PER_DEFECTE, Astro.site).toString(),
+    author: { '@id': `${lloc}#entitat` },
+    publisher: { '@id': `${lloc}#entitat` },
+    mainEntityOfPage: { '@id': `${url}#pagina` },
+    isPartOf: { '@id': `${lloc}#web` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#molla`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inici', item: lloc },
+      { '@type': 'ListItem', position: 2, name: 'Actualitat', item: absoluta('/actualitat') },
+      { '@type': 'ListItem', position: 3, name: cat.plural, item: absoluta(cat.url) },
+      { '@type': 'ListItem', position: 4, name: entrada.data.titol, item: url },
+    ],
+  },
+];
 const text = `${entrada.data.titol} — ${web.nom}`;
 const compartir = [
   { nom: 'WhatsApp', url: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}` },
@@ -32,6 +63,8 @@ const compartir = [
   tipus="article"
   dataPublicacio={entrada.data.data}
   imatge={entrada.data.imatge}
+  imatgeAlt={entrada.data.imatge_alt}
+  esquema={esquema}
 >
   <article class="seccio seccio--compacta">
     <div class="contenidor contenidor--estret">

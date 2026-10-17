@@ -2,29 +2,85 @@
 import '../styles/global.css';
 import Capcalera from '../components/Capcalera.astro';
 import Peu from '../components/Peu.astro';
-import { web } from '../lib/web';
+import { web, urlCanonica, IMATGE_PER_DEFECTE } from '../lib/web';
 
 interface Props {
   titol: string;
   descripcio: string;
   imatge?: string;
   tipus?: 'website' | 'article';
+  imatgeAlt?: string;
   dataPublicacio?: Date;
   senseIndexar?: boolean;
+  /** Dades estructurades (schema.org) pròpies de la pàgina, que s'afegeixen al graf comú. */
+  esquema?: Record<string, unknown>[];
 }
 
 const {
   titol,
   descripcio,
-  imatge = '/imatges/og-connectats.jpg',
+  imatge = IMATGE_PER_DEFECTE,
+  imatgeAlt,
   tipus = 'website',
   dataPublicacio,
   senseIndexar = false,
+  esquema = [],
 } = Astro.props;
 
 const titolComplet = titol === web.nom ? `${web.nom} — ${web.lema}` : `${titol} | ${web.nom}`;
-const canonica = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site);
+const canonica = urlCanonica(Astro.url.pathname, Astro.site);
 const imatgeAbs = new URL(imatge, Astro.site);
+const esImatgePerDefecte = imatge === IMATGE_PER_DEFECTE;
+const lloc = new URL('/', Astro.site).toString();
+
+// Graf schema.org: entitat, lloc web i pàgina, més el que hi afegeixi cada pàgina.
+const grafEsquema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'NGO',
+      '@id': `${lloc}#entitat`,
+      name: web.nomLlarg,
+      alternateName: web.nom,
+      url: lloc,
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('/imatges/logo-connectats.jpg', Astro.site).toString(),
+        width: 2191,
+        height: 1043,
+      },
+      image: new URL(IMATGE_PER_DEFECTE, Astro.site).toString(),
+      email: web.correu,
+      description: web.descripcio,
+      areaServed: { '@type': 'AdministrativeArea', name: 'Catalunya' },
+      knowsLanguage: 'ca',
+      sameAs: web.xarxes.map((x) => x.url),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${lloc}#web`,
+      url: lloc,
+      name: web.nomLlarg,
+      alternateName: web.nom,
+      description: web.descripcio,
+      inLanguage: 'ca',
+      publisher: { '@id': `${lloc}#entitat` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonica}#pagina`,
+      url: canonica.toString(),
+      name: titolComplet,
+      description: descripcio,
+      inLanguage: 'ca',
+      isPartOf: { '@id': `${lloc}#web` },
+      about: { '@id': `${lloc}#entitat` },
+      primaryImageOfPage: imatgeAbs.toString(),
+      ...(dataPublicacio && { datePublished: dataPublicacio.toISOString() }),
+    },
+    ...esquema,
+  ],
+};
 ---
 <!doctype html>
 <html lang="ca">
@@ -34,7 +90,12 @@ const imatgeAbs = new URL(imatge, Astro.site);
     <title>{titolComplet}</title>
     <meta name="description" content={descripcio} />
     <link rel="canonical" href={canonica} />
-    {senseIndexar && <meta name="robots" content="noindex, follow" />}
+    <meta
+      name="robots"
+      content={senseIndexar ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+    />
+    {!senseIndexar && <link rel="alternate" hreflang="ca" href={canonica} />}
+    {!senseIndexar && <link rel="alternate" hreflang="x-default" href={canonica} />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -59,22 +120,16 @@ const imatgeAbs = new URL(imatge, Astro.site);
     <meta property="og:description" content={descripcio} />
     <meta property="og:url" content={canonica} />
     <meta property="og:image" content={imatgeAbs} />
-    <meta property="og:image:alt" content={`Logotip de ${web.nomLlarg}`} />
+    {esImatgePerDefecte && <meta property="og:image:width" content="1200" />}
+    {esImatgePerDefecte && <meta property="og:image:height" content="630" />}
+    <meta property="og:image:alt" content={esImatgePerDefecte ? `Logotip de ${web.nomLlarg}` : (imatgeAlt || titol)} />
     {dataPublicacio && <meta property="article:published_time" content={dataPublicacio.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titolComplet} />
+    <meta name="twitter:description" content={descripcio} />
+    <meta name="twitter:image" content={imatgeAbs} />
 
-    <script type="application/ld+json" is:inline set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'NGO',
-      name: web.nomLlarg,
-      alternateName: web.nom,
-      url: Astro.site?.toString(),
-      logo: new URL('/imatges/logo-connectats.jpg', Astro.site).toString(),
-      email: web.correu,
-      description: web.descripcio,
-      areaServed: 'Catalunya',
-      knowsLanguage: 'ca',
-    })} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(grafEsquema)} />
   </head>
 
   <body>

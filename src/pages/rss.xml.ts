@@ -9,7 +9,6 @@ export async function GET(context: APIContext) {
     title: `Actualitat — ${web.nomLlarg}`,
     description: 'Alertes sobre estafes en circulació, articles divulgatius i notícies de l\'associació.',
     site: context.site!,
-    trailingSlash: false,
     customData: '<language>ca</language>',
     items: entrades.map((e) => {
       const nom = categories[e.data.categoria].nom;
@@ -21,7 +20,7 @@ export async function GET(context: APIContext) {
       title: titol,
       description: e.data.resum,
       pubDate: e.data.data,
-      link: `/actualitat/${e.id}`,
+      link: `/actualitat/${e.id}/`,
       categories: [categories[e.data.categoria].plural],
       };
     }),

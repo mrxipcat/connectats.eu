@@ -74,6 +74,19 @@ export function formataDataHora(data: Date): string {
   }).format(data);
 }
 
+/** Imatge per compartir que es fa servir quan una pàgina no en té cap de pròpia (1200×630). */
+export const IMATGE_PER_DEFECTE = '/imatges/og-connectats.jpg';
+
+/**
+ * URL canònica d'una ruta. Azure Static Web Apps serveix cada pàgina a /ruta/
+ * (i redirigeix /ruta cap a /ruta/), així que la canònica sempre acaba en barra,
+ * igual que al sitemap.
+ */
+export function urlCanonica(ruta: string, lloc: URL | undefined): URL {
+  const ambBarra = ruta.endsWith('/') ? ruta : `${ruta}/`;
+  return new URL(ambBarra, lloc);
+}
+
 export function dataISO(data: Date): string {
   return data.toISOString().slice(0, 10);
 }

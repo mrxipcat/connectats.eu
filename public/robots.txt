@@ -1,5 +1,8 @@
 # Connectats — Digitalment Segurs
 User-agent: *
 Allow: /
+# Funcions del formulari de contacte i notes internes per a l'equip
+Disallow: /api/
+Disallow: /*.md$
 
 Sitemap: https://connectats.eu/sitemap-index.xml
