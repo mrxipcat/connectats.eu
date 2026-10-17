@@ -8,15 +8,13 @@ export const web = {
   nomLlarg: 'Associació Connectats — Digitalment Segurs',
   descripcio:
     'Formació, assessorament i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
-  correu: 'info@connectats.eu', // [PENDENT] confirmar adreça definitiva
+  correu: 'info@connectats.eu',
   telefon: '', // [PENDENT] opcional
   adreca: '', // [PENDENT] opcional
   nif: 'G-00000000', // [PENDENT]
   registre: 'Registre d\'Associacions de la Generalitat de Catalunya, núm. [PENDENT]', // [PENDENT]
   xarxes: [
-    { nom: 'Mastodon', url: 'https://mastodon.social/@connectats', etiqueta: 'Mastodon (s\'obre en una finestra nova)' }, // [PENDENT]
-    { nom: 'LinkedIn', url: 'https://www.linkedin.com/company/connectats', etiqueta: 'LinkedIn (s\'obre en una finestra nova)' }, // [PENDENT]
-    { nom: 'Instagram', url: 'https://www.instagram.com/connectats', etiqueta: 'Instagram (s\'obre en una finestra nova)' }, // [PENDENT]
+    { nom: 'Instagram', url: 'https://www.instagram.com/connectats.eu', etiqueta: 'Instagram (s\'obre en una finestra nova)' },
   ],
 } as const;
 

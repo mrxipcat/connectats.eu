@@ -35,9 +35,8 @@ const configurat = endpoint.length > 0;
 
         {!configurat && (
           <p class="nota nota--principal">
-            <strong>[PENDENT]</strong> El formulari encara no està connectat a cap servei d'enviament.
-            Mentrestant, escriu-nos directament a <a href={`mailto:${web.correu}`}>{web.correu}</a>.
-            Les instruccions per connectar-lo són al fitxer <code>README.md</code>.
+            El formulari no està disponible en aquest moment.
+            Escriu-nos directament a <a href={`mailto:${web.correu}`}>{web.correu}</a>.
           </p>
         )}
 
@@ -111,7 +110,7 @@ const configurat = endpoint.length > 0;
               <Icona nom="correu" mida={20} /> {web.correu}
             </a>
           </p>
-          <p class="meta">Resposta habitual: 1-2 dies feiners. <span class="pendent">[PENDENT]</span></p>
+          <p class="meta">Resposta habitual: 1-2 dies feiners.</p>
         </div>
 
         <div class="targeta">
@@ -126,7 +125,6 @@ const configurat = endpoint.length > 0;
               </li>
             ))}
           </ul>
-          <p class="meta"><span class="pendent">[PENDENT]</span> Confirmeu els perfils reals.</p>
         </div>
 
         <div class="targeta targeta--avis">
@@ -187,5 +185,4 @@ const configurat = endpoint.length > 0;
   .xarxes li { margin: 0; }
   .targeta--avis { border-color: var(--avis-vora); background: var(--avis-suau); }
   .targeta--avis p:last-child { margin-bottom: 0; }
-  .pendent { color: var(--avis); font-weight: 700; }
 </style>
