@@ -6,8 +6,6 @@ resum: "Circulen missatges SMS que anuncien una devolució d'impostos pendent i 
 imatge_alt: ""
 ---
 
-> **[PENDENT]** Entrada de mostra. Substituïu-ne el text pel contingut real abans de publicar.
-
 Aquests dies arriben molts missatges SMS que diuen que teniu **una devolució d'impostos pendent de cobrar**. El missatge porta un enllaç a una pàgina que imita la de l'Agència Tributària i que demana el número de targeta "per fer l'ingrés".
 
 ## Com ho pots reconèixer

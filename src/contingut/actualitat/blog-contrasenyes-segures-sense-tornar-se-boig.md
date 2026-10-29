@@ -5,8 +5,6 @@ categoria: blog
 resum: "Tres idees senzilles per tenir contrasenyes fortes sense haver de memoritzar-ne desenes: frases de pas, gestor de contrasenyes i verificació en dos passos."
 ---
 
-> **[PENDENT]** Entrada de mostra. Substituïu-ne el text pel contingut real abans de publicar.
-
 Quan parlem de contrasenyes a les nostres xerrades, sempre apareix la mateixa frase: *"és que no me'n puc recordar de tantes"*. I és del tot raonable. Una persona adulta té, de mitjana, entre quaranta i cent comptes en línia. Ningú no pot recordar cent contrasenyes diferents, i per això acabem fent el que no toca: repetir-ne una, apuntar-la en un paper o afegir-hi un número al final.
 
 La bona notícia és que la seguretat de les contrasenyes ha deixat de dependre de la memòria. Avui n'hi ha prou amb tres hàbits.

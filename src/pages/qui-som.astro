@@ -165,6 +165,23 @@ const finalitats = [
   </section>
 </Base>
 
+<script>
+  // L'ordre de les fitxes de l'equip és aleatori a cada visita (Fisher-Yates).
+  // Sense JavaScript es mostren en l'ordre del contingut.
+  (function () {
+    var llista = document.querySelector('.equip');
+    if (!llista) return;
+    var fitxes = Array.prototype.slice.call(llista.children);
+    for (var i = fitxes.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = fitxes[i];
+      fitxes[i] = fitxes[j];
+      fitxes[j] = tmp;
+    }
+    fitxes.forEach(function (f) { llista.appendChild(f); });
+  })();
+</script>
+
 <style>
   .missio { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
   @media (min-width: 58rem) { .missio { grid-template-columns: 1.1fr 1fr; } }
