@@ -1,0 +1,25 @@
+Carpeta de recursos (pàgina "Recursos").
+
+Mentre aquesta carpeta no tingui cap fitxer .md, la pàgina "Recursos"
+mostra el missatge "Encara no hi ha recursos publicats."
+
+La manera més còmoda d'afegir-ne és des del panell (Pages CMS):
+Recursos i materials → Add an entry. Vegeu el README.md, apartat
+"Afegir un recurs descarregable".
+
+També es pot crear aquí un fitxer .md amb aquest contingut:
+
+---
+titol: "Guia ràpida: com reconèixer un missatge fraudulent"
+descripcio: "Fitxa de dues pàgines amb els senyals d'alerta d'un SMS, correu o WhatsApp fraudulent."
+public: ["Gent gran", "Famílies"]
+format: PDF
+idioma: "Català"
+fitxer_o_url: "/fitxers/guia-missatges-fraudulents.pdf"
+ordre: 10
+---
+
+- format: PDF, vídeo o enllaç.
+- fitxer_o_url: per a un PDF, /fitxers/nom-del-fitxer.pdf (el fitxer va a
+  public/fitxers/); per a un vídeo o un enllaç, l'adreça completa https://…
+- ordre: número més baix = surt abans.

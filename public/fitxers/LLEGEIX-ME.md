@@ -4,8 +4,6 @@ Aquí van els PDF i altres documents que s'enllacen des de la web.
 
 Fitxers que la web espera trobar-hi i que **encara no s'han pujat** `[PENDENT]`:
 
-- `guia-missatges-fraudulents.pdf` — guia ràpida per reconèixer un missatge fraudulent
-- `guia-contrasenyes.pdf` — contrasenyes i gestors de contrasenyes
 - `estatuts-connectats.pdf` — estatuts de l'associació (pàgina de Transparència)
 
 ## Com pujar-ne un

@@ -126,7 +126,7 @@ Llista del que cal resoldre:
 - [ ] **Fotos i noms de l'equip** (panell → Equip).
 - [ ] **Entrades de mostra**: les 6 entrades d'Actualitat són exemples; substituïu-les o esborreu-les.
 - [ ] **Activitats de mostra** a l'agenda.
-- [ ] **PDF dels recursos**: cal pujar els fitxers reals a `public/fitxers/`.
+- [ ] **Recursos**: no n'hi ha cap de publicat; afegiu-los des del panell quan els tingueu (PDF a `public/fitxers/`).
 - [ ] **Estatuts en PDF** a `public/fitxers/estatuts-connectats.pdf` (pàgina de Transparència).
 - [ ] **Junta directiva, comptes i subvencions** (`src/pages/transparencia.astro`).
 - [ ] **Verificar telèfons i adreces** de la pàgina «He patit una estafa» (112, 017, Mossos, APDCAT).
