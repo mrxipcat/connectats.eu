@@ -10,9 +10,9 @@ export const web = {
     'Formació, conscienciació i recursos oberts per fer front a les estafes en línia i als riscos digitals, amb atenció especial als col·lectius més vulnerables.',
   correu: 'info@connectats.eu',
   telefon: '', // [PENDENT] opcional
-  adreca: '', // [PENDENT] opcional
+  adreca: 'Carrer Empordà, 30. 08460 Santa Maria de Palautordera',
   nif: 'G-00000000', // [PENDENT]
-  registre: 'Registre d\'Associacions de la Generalitat de Catalunya, núm. [PENDENT]', // [PENDENT]
+  registre: 'Registre d\'Associacions de la Generalitat de Catalunya', // [PENDENT] afegir «, núm. XXXX» quan el tinguem
   xarxes: [
     { nom: 'Instagram', url: 'https://www.instagram.com/connectats.eu', etiqueta: 'Instagram (s\'obre en una finestra nova)' },
   ],
